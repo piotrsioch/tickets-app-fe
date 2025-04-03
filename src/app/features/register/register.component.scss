@@ -1,3 +1,5 @@
+@import 'mixins';
+
 .tickets-register {
   &__container {
     display: flex;
@@ -22,25 +24,16 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
 
-    &__label {
-      font-weight: bold;
-      font-size: 0.9rem;
-      color: #333;
-    }
+  &__label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #333;
+  }
 
-    &__input {
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-      transition: border-color 0.3s ease-in-out;
-
-      &:focus {
-        border-color: #007bff;
-        outline: none;
-      }
-    }
+  &__input {
+    @include default-input();
   }
 
   &__buttons {
@@ -49,17 +42,6 @@
   }
 
   &__button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-
-    &:hover {
-      background-color: #0056b3;
-    }
+   @include default-button();
   }
 }

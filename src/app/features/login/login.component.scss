@@ -1,63 +1,47 @@
-.tickets-login__container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f4f4f4;
-}
+@import 'mixins';
 
-.tickets-login__form {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
+.tickets-login {
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
 
-.tickets-login__field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
+  &__form {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 
-.tickets-login__label {
-  font-weight: bold;
-  font-size: 0.9rem;
-  color: #333;
-}
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 
-.tickets-login__input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease-in-out;
-}
+  &__label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #333;
+  }
 
-.tickets-login__input:focus {
-  border-color: #007bff;
-  outline: none;
-}
+  &__input {
+    @include default-input();
+  }
 
-.tickets-login__buttons {
-  display: flex;
-  justify-content: center;
-}
+  &__buttons {
+    display: flex;
+    justify-content: center;
+  }
 
-.tickets-login__button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.tickets-login__button:hover {
-  background-color: #0056b3;
+  &__button {
+    @include default-button();
+  }
 }
