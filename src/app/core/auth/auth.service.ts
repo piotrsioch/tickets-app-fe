@@ -20,6 +20,7 @@ export class AuthService {
       const token = this.userToken();
       if (token) {
         localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(token));
+        console.log('Token set: ', token);
       }
     });
   }
