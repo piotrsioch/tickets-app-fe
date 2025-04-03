@@ -1,0 +1,52 @@
+.tickets-toast__container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  min-width: 250px;
+  max-width: 400px;
+  z-index: 1000;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.tickets-toast__message {
+  flex-grow: 1;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.tickets-toast__close {
+  color: black;
+  cursor: pointer;
+  font-size: 20px;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+/* Severity-based styles */
+.tickets-toast--success {
+  background-color: #4caf50; // Green
+}
+
+.tickets-toast--error {
+  background-color: #f44336; // Red
+}
+
+.tickets-toast--warning {
+  background-color: #ff9800; // Orange
+}
+
+.tickets-toast--info {
+  background-color: #2196f3; // Blue
+}

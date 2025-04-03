@@ -3,56 +3,68 @@
     [formGroup]="registerForm"
     class="tickets-register__form"
   >
-    <div class="tickets-register__form__field">
-      <span>Email</span>
+    <div class="tickets-register__field">
+      <label class="tickets-register__label" for="email">Email</label>
       <input
+        id="email"
         formControlName="email"
-        placeholder="Enter your mail"
+        class="tickets-register__input"
+        placeholder="Enter your email"
       >
     </div>
-    <div class="tickets-register__form__field">
-      <span>Password</span>
+    <div class="tickets-register__field">
+      <label class="tickets-register__label" for="password">Password</label>
       <input
+        id="password"
         formControlName="password"
         type="password"
-        placeholder="Enter your your password"
+        class="tickets-register__input"
+        placeholder="Enter your password"
       >
     </div>
-    <div class="tickets-register__form__field">
-      <span>Confirm password</span>
+    <div class="tickets-register__field">
+      <label class="tickets-register__label" for="confirmPassword">Confirm password</label>
       <input
+        id="confirmPassword"
         formControlName="confirmPassword"
-        placeholder="Repeat password"
+        class="tickets-register__input"
+        placeholder="Repeat your password"
       >
     </div>
-    <div class="tickets-register__form__field">
-      <span>First name</span>
+    <div class="tickets-register__field">
+      <label class="tickets-register__label" for="firstName">First name</label>
       <input
+        id="firstName"
         formControlName="firstName"
+        class="tickets-register__input"
         placeholder="Enter your first name"
       >
     </div>
-    <div class="tickets-register__form__field">
-      <span>Last name</span>
+    <div class="tickets-register__field">
+      <label class="tickets-register__label" for="lastName">Last name</label>
       <input
+        id="lastName"
         formControlName="lastName"
+        class="tickets-register__input"
         placeholder="Enter your last name"
       >
     </div>
-    <div class="tickets-register__form__field">
-      <span>Phone number</span>
+    <div class="tickets-register__field">
+      <label class="tickets-register__label" for="phoneNumber">Phone number</label>
       <input
+        id="phoneNumber"
         formControlName="phoneNumber"
+        class="tickets-register__input"
         placeholder="Enter your phone number"
       >
     </div>
-  </div>
-  <div class="tickets-register__form__buttons">
-    <button
-      (click)="onRegister()"
-      class="tickets-register__form__button-register"
-    >
-      Register
-    </button>
+    <div class="tickets-register__buttons">
+      <button
+        (click)="onRegister()"
+        class="tickets-register__button"
+      >
+        Register
+      </button>
+    </div>
   </div>
 </div>
