@@ -4,4 +4,5 @@ export interface PaginationOptions {
   orderField?: string;
   orderDirection?: 'ASC' | 'DESC';
   search?: string;
+  searchFields?: string[];
 }

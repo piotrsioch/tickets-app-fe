@@ -12,8 +12,11 @@ export function buildPaginationParams(options: PaginationOptions): HttpParams {
     params = params.set('orderDirection', options.orderDirection);
   }
 
-  if (options.search) {
+  if (options.search && options?.searchFields && options.search.length > 0) {
     params = params.set('search', options.search);
+
+    const searchFields: string = options.searchFields.join(',');
+    params = params.set('searchFields', searchFields);
   }
 
   return params;

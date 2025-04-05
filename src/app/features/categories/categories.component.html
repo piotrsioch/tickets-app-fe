@@ -3,9 +3,11 @@
     [tableColumns]="categoriesColumns()"
     [tableData]="categories()!"
     [isPageable]="true"
+    [isSearchable]="true"
     [paginationSizes]="[5, 10, 20]"
-    [defaultPageSize]="5"
+    [defaultPageSize]="10"
     [totalItemCount]="categories()?.total!"
-    (pageChanged)="onPageChanged($event)">
-  </tickets-table>
+    (pageChanged)="onPageChanged($event)"
+    (searchChanged)="onSearchChanged($event)"
+  ></tickets-table>
 </div>

@@ -1,8 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { TableComponent } from '../../shared/components/table/table.component';
 import { CategoriesApiService, Category } from '../../core/api/categories';
-import { ActivatedRoute } from '@angular/router';
 import { CustomDatasource, PageChangeEvent, TableColumn } from '../../shared/components/table/table.assets';
+import { PaginationOptions } from '../../shared/models';
 
 @Component({
   selector: 'tickets-categories',
@@ -31,18 +31,33 @@ export class CategoriesComponent implements OnInit {
     },
   ]);
   categories = signal<CustomDatasource<Category> | null>(null);
-  route = inject(ActivatedRoute);
+  search = signal<string>('');
 
   ngOnInit(): void {
     this.loadCategories();
   }
 
-  onPageChanged(e: PageChangeEvent) {
-    console.log('revived', e);
+  async onSearchChanged(search: string): Promise<void> {
+    await this.loadCategories({ search, page: 0, limit: 10 });
+
+    console.log(this.categories());
   }
 
-  private async loadCategories(): Promise<void> {
-    const categories = await this.categoriesApiService.getAllCategories({ page: 0, limit: 10 });
+  async onPageChanged(data: PageChangeEvent) {
+    const search = this.search();
+    const { pageIndex: page, pageSize: limit } = data;
+
+    await this.loadCategories({ page, limit, search });
+  }
+
+  private async loadCategories(options?: PaginationOptions): Promise<void> {
+    const optionsWithSearch: PaginationOptions = options
+      ? { ...options, searchFields: ['name', 'description'] }
+      : { page: 0, limit: 10 };
+
+    console.log(optionsWithSearch);
+
+    const categories = await this.categoriesApiService.getAllCategories(optionsWithSearch);
     const mappedCategories: CustomDatasource<Category> = {
       data: categories.items,
       total: categories.total,
