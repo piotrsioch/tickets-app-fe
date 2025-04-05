@@ -22,6 +22,14 @@ module.exports = tseslint.config(
           style: 'camelCase',
         },
       ],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          caughtErrorsIgnorePattern: '^_',
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
     },
   },
   {
