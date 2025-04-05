@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RootLayoutComponent } from './core/components/root-layout/root-layout.component';
 
 @Component({
   selector: 'tickets-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  imports: [RootLayoutComponent],
+  template: '<tickets-root-layout/>',
 })
-export class AppComponent {
-  title = 'tickets-app-fe';
-}
+export class AppComponent {}
