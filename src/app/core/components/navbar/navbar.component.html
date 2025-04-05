@@ -1,0 +1,23 @@
+<div class="tickets-navbar__container">
+  <a
+    routerLink="/home"
+    class="tickets-navbar__item"
+  >
+    Home
+  </a>
+  @if(!isLoggedIn()) {
+    <a
+      routerLink="/login"
+      class="tickets-navbar__item"
+    >
+      Login
+    </a>
+  } @else {
+    <button
+      (click)="onLogout()"
+      class="tickets-navbar__logout"
+    >
+      Logout
+    </button>
+  }
+</div>

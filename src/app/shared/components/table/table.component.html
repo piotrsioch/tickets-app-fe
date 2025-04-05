@@ -1,0 +1,31 @@
+@if(tableDataSource()) {
+  <div class="tickets-table__container">
+    <table mat-table [dataSource]="tableDataSource()" class="tickets-table__table">
+      @for (tableColumn of tableColumns(); track tableColumn.dataKey) {
+        <ng-container [matColumnDef]="tableColumn.name">
+          <th *matHeaderCellDef mat-header-cell>
+            {{ tableColumn.name }}
+          </th>
+          <td *matCellDef="let element" mat-cell>
+            {{ element[tableColumn.dataKey] }}
+          </td>
+        </ng-container>
+      }
+
+      <tr *matHeaderRowDef="displayedColumns()" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns();" mat-row></tr>
+    </table>
+
+    @if(isPageable() && totalItemCount()) {
+      <mat-paginator
+        #paginator
+        [length]="totalItemCount()"
+        [pageSizeOptions]="paginationSizes()"
+        [pageSize]="defaultPageSize()"
+        (page)="pageChangeEvent($event)"
+        showFirstLastButtons
+      ></mat-paginator>
+    }
+  </div>
+}
+

@@ -1,0 +1,16 @@
+@if(toast()) {
+  <div class="tickets-toast__container">
+    <div
+      [ngClass]="'tickets-toast--' + toast()?.severity"
+      class="tickets-toast__message"
+    >
+      {{ toast()?.text }}
+    </div>
+    <mat-icon
+      (click)="onClose()"
+      class="tickets-toast__close"
+    >
+      close
+    </mat-icon>
+  </div>
+}

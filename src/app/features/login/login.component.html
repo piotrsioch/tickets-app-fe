@@ -3,25 +3,29 @@
     [formGroup]="loginForm"
     class="tickets-login__form"
   >
-    <div class="tickets-login__form__email">
-      <span>Email</span>
+    <div class="tickets-login__field">
+      <label class="tickets-login__label" for="email">Email</label>
       <input
+        id="email"
         formControlName="email"
-        placeholder="Enter your mail"
+        class="tickets-login__input"
+        placeholder="Enter your email"
       >
     </div>
-    <div class="tickets-login__form__password">
-      <span>Password</span>
+    <div class="tickets-login__field">
+      <label class="tickets-login__label" for="password">Password</label>
       <input
+        id="password"
         formControlName="password"
         type="password"
+        class="tickets-login__input"
         placeholder="Enter your password"
       >
     </div>
-    <div class="tickets-login__form__buttons">
+    <div class="tickets-login__buttons">
       <button
         (click)="onLogin()"
-        class="tickets-login__form__button-login"
+        class="tickets-login__button"
       >
         Login
       </button>

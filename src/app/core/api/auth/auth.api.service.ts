@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments';
-import { firstValueFrom } from 'rxjs';
 import { RegisterUser, User } from './types';
+import { catchError, firstValueFrom, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,5 +20,20 @@ export class AuthApiService {
     const register$ = this.http.post<User>(`${environment.apiRoot}/auth/register`, data);
 
     return await firstValueFrom(register$);
+  }
+
+  async logout(token: string): Promise<void> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    const logout$ = this.http.post(`${environment.apiRoot}/auth/logout`, null, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          return of(null);
+        }
+        throw error;
+      })
+    );
+
+    await firstValueFrom(logout$);
   }
 }

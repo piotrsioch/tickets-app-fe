@@ -1,6 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../core/auth/auth.service';
+import { AuthService } from '../../core/services/auth.service';
+import { ToastSeverity } from '../../core/services/types/toast.model';
+import { ToastService } from '../../core/services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tickets-register',
@@ -11,6 +14,8 @@ import { AuthService } from '../../core/auth/auth.service';
 export class RegisterComponent {
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
+  toastService = inject(ToastService);
+  router = inject(Router);
 
   registerForm = this.formBuilder.group({
     email: [''],
@@ -40,9 +45,10 @@ export class RegisterComponent {
         lastName,
         phoneNumber: phoneNumber ? phoneNumber : '',
       });
+      await this.router.navigate(['/home']);
     } catch (error) {
       console.error(error);
-      alert('Error during register');
+      this.toastService.show('Error during register', ToastSeverity.ERROR);
     }
   }
 }

@@ -8,7 +8,7 @@ import { TOKEN_STORAGE_KEY } from '../../shared/const';
 export class AuthService {
   #userTokenSignal = signal<string | null>(null);
   userToken = this.#userTokenSignal.asReadonly();
-  isLoggedIn = computed(() => !!this.userToken);
+  isLoggedIn = computed(() => !!this.userToken());
 
   authApiService = inject(AuthApiService);
 
@@ -19,7 +19,6 @@ export class AuthService {
       const token = this.userToken();
       if (token) {
         localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(token));
-        console.log('Token set: ', token);
       }
     });
   }
@@ -43,5 +42,15 @@ export class AuthService {
   async register(data: RegisterUser): Promise<User> {
     const user = await this.authApiService.register(data);
     return user;
+  }
+
+  async logout() {
+    const token = this.userToken();
+
+    if (token) {
+      await this.authApiService.logout(token);
+      this.#userTokenSignal.set(null);
+      localStorage.removeItem(TOKEN_STORAGE_KEY);
+    }
   }
 }

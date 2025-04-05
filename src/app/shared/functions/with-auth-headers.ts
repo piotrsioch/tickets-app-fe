@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
-import { AuthService } from '../../core/auth/auth.service';
 import { HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../core/services/auth.service';
 
 export function withAuthHeaders() {
   const authService = inject(AuthService);
