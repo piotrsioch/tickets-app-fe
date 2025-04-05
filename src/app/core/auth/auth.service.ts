@@ -1,7 +1,6 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { AuthApiService, User, RegisterUser } from '../api/auth';
-
-const TOKEN_STORAGE_KEY = 'accessToken';
+import { TOKEN_STORAGE_KEY } from '../../shared/const';
 
 @Injectable({
   providedIn: 'root',

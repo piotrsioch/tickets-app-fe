@@ -2,8 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments';
 import { firstValueFrom } from 'rxjs';
-import { User } from './auth.api.types';
-import { RegisterUser } from './types/register-user.model';
+import { RegisterUser, User } from './types';
 
 @Injectable({
   providedIn: 'root',
