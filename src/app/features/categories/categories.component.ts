@@ -38,6 +38,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   async onSearchChanged(search: string): Promise<void> {
+    this.search.set(search);
     await this.loadCategories({ search, page: 0, limit: 10 });
 
     console.log(this.categories());

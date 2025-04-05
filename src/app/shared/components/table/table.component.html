@@ -1,7 +1,8 @@
 @if(tableDataSource()) {
   <div class="tickets-table__container">
       @if(isSearchable()) {
-      <ng-container
+      <div
+              class="tickets-table__search"
               matColumnDef="filter"
       >
           <mat-form-field>
@@ -13,7 +14,7 @@
                       matInput
               >
           </mat-form-field>
-      </ng-container>
+      </div>
       }
 
       <table mat-table [dataSource]="tableDataSource()" class="tickets-table__table">
