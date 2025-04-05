@@ -51,12 +51,18 @@ export class CategoriesComponent implements OnInit {
     await this.loadCategories({ page, limit, search });
   }
 
+  async onEditClicked(category: Category): Promise<void> {
+    console.log('Edited: ', category.id);
+  }
+
+  async onDeleteClicked(category: Category) {
+    console.log('Deleted: ', category.id);
+  }
+
   private async loadCategories(options?: PaginationOptions): Promise<void> {
     const optionsWithSearch: PaginationOptions = options
       ? { ...options, searchFields: ['name', 'description'] }
       : { page: 0, limit: 10 };
-
-    console.log(optionsWithSearch);
 
     const categories = await this.categoriesApiService.getAllCategories(optionsWithSearch);
     const mappedCategories: CustomDatasource<Category> = {

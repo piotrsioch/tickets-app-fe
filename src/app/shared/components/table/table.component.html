@@ -2,32 +2,66 @@
   <div class="tickets-table__container">
       @if(isSearchable()) {
       <div
-              class="tickets-table__search"
-              matColumnDef="filter"
+        class="tickets-table__search"
+        matColumnDef="filter"
       >
-          <mat-form-field>
-              <mat-label>Search</mat-label>
-              <input
-                      (input)="onSearchInput($event)"
-                      (keydown.enter)="onSearchChanged()"
-                      placeholder="filter"
-                      matInput
-              >
-          </mat-form-field>
+        <mat-form-field>
+          <mat-label>Search</mat-label>
+          <input
+            (input)="onSearchInput($event)"
+            (keydown.enter)="onSearchChanged()"
+            placeholder="filter"
+            matInput
+          ></mat-form-field>
       </div>
       }
 
-      <table mat-table [dataSource]="tableDataSource()" class="tickets-table__table">
-      @for (tableColumn of tableColumns(); track tableColumn.dataKey) {
-        <ng-container [matColumnDef]="tableColumn.name">
-          <th *matHeaderCellDef mat-header-cell>
-            {{ tableColumn.name }}
-          </th>
-          <td *matCellDef="let element" mat-cell>
-            {{ element[tableColumn.dataKey] }}
-          </td>
-        </ng-container>
-      }
+      <table
+        [dataSource]="tableDataSource()"
+        mat-table
+        class="tickets-table__table"
+      >
+        @for (tableColumn of tableColumns(); track tableColumn.dataKey) {
+          <ng-container [matColumnDef]="tableColumn.name">
+            <th
+              *matHeaderCellDef
+              mat-header-cell
+            >
+              {{ tableColumn.name }}
+            </th>
+            <td
+              *matCellDef="let element"
+              mat-cell
+            >
+              {{ element[tableColumn.dataKey] }}
+            </td>
+          </ng-container>
+        }
+
+        @if(showActions()) {
+          <ng-container matColumnDef="Actions">
+            <th
+              *matHeaderCellDef
+              mat-header-cell
+            >
+              Actions
+            </th>
+            <td *matCellDef="let element" mat-cell>
+              <button
+                (click)="onEdit(element)"
+                mat-icon-button
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                (click)="onDelete(element)"
+                mat-icon-button
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+        }
 
       <tr *matHeaderRowDef="displayedColumns()" mat-header-row></tr>
       <tr *matRowDef="let row; columns: displayedColumns();" mat-row></tr>

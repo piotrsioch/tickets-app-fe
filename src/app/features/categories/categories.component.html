@@ -9,5 +9,7 @@
     [totalItemCount]="categories()?.total!"
     (pageChanged)="onPageChanged($event)"
     (searchChanged)="onSearchChanged($event)"
+    (editClicked)="onEditClicked($event)"
+    (deleteClicked)="onDeleteClicked($event)"
   ></tickets-table>
 </div>
