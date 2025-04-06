@@ -7,12 +7,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5); // Semi-transparent overlay
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 1050;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 mat-spinner {
-  width: 50px !important;
-  height: 50px !important;
-  color: white; // Adjust color if needed
+  width: 100px !important;
+  height: 100px !important;
+  color: white;
 }

@@ -1,21 +1,29 @@
-/* Reset & Global Styles */
+@import 'variables';
+
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4; // Light gray background for better contrast
 }
 
-/* Root Layout */
 .tickets-root-layout {
   &__container {
     height: 100%;
     width: 100%;
     overflow: auto;
+    background-color: #f4f4f4;
+  }
+
+  &__navbar {
+    width: 100%;
+    height: $navbar-height;
+    padding: $main-size * 5 0;
   }
 
   &__main {
+    height: calc(100vh - $navbar-height - $main-size * 10);
+    width: 100%;
     overflow: auto;
   }
 
