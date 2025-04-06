@@ -1,0 +1,15 @@
+<div class="categories-container">
+  <tickets-table
+    [tableColumns]="categoriesColumns()"
+    [tableData]="categories()!"
+    [isPageable]="true"
+    [isSearchable]="true"
+    [paginationSizes]="[5, 10, 20]"
+    [defaultPageSize]="10"
+    [totalItemCount]="categories()?.total!"
+    (pageChanged)="onPageChanged($event)"
+    (searchChanged)="onSearchChanged($event)"
+    (editClicked)="onEditClicked($event)"
+    (deleteClicked)="onDeleteClicked($event)"
+  ></tickets-table>
+</div>
