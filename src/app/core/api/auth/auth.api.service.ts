@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments';
+import { RegisterUser, User } from './types';
 import { catchError, firstValueFrom, of } from 'rxjs';
-import { User } from './auth.api.types';
-import { RegisterUser } from './types/register-user.model';
 
 @Injectable({
   providedIn: 'root',
