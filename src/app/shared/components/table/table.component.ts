@@ -27,6 +27,7 @@ export class TableComponent<T> {
   searchChanged = output<string>();
   editClicked = output<T>();
   deleteClicked = output<T>();
+  rowClicked = output<T>();
 
   displayedColumns = computed(() => {
     const columns = this.tableColumns().map(column => column.name);
@@ -59,5 +60,9 @@ export class TableComponent<T> {
 
   onEdit(data: T) {
     this.editClicked.emit(data);
+  }
+
+  onRowClicked(data: T) {
+    this.rowClicked.emit(data);
   }
 }

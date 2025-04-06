@@ -31,6 +31,7 @@
             </th>
             <td
               *matCellDef="let element"
+              (click)="onRowClicked(element)"
               mat-cell
             >
               {{ element[tableColumn.dataKey] }}

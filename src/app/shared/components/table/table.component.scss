@@ -1,9 +1,17 @@
 @import 'variables';
 
-:host  {
+$search-height: 13 * $main-size;
+
+:host ::ng-deep {
   .mat-mdc-paginator {
     display: flex !important;
     justify-content: center;
+  }
+
+  ::ng-deep {
+    .mat-mdc-form-field-subscript-wrapper, .mdc-line-ripple {
+      display: none;
+    }
   }
 }
 
@@ -16,6 +24,7 @@
     width: 100%;
     border-collapse: collapse;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: calc(100% - $search-height);
   }
 
   &__table th {
@@ -63,5 +72,12 @@
     padding: 0.5rem;
     font-size: 0.875rem;
   }
-}
 
+  &__search {
+    height: $search-height;
+
+    .mat-mdc-form-field {
+      height: 100% !important;
+    }
+  }
+}
