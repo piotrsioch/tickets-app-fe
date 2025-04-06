@@ -1,0 +1,15 @@
+<div class="tickets-confirm-modal__container">
+  <tickets-modal-header
+    (closeClicked)="close()"
+    [title]="title()"
+  />
+  <div class="tickets-confirm-modal__description">
+    {{ description() }}
+  </div>
+  <div class="tickets-alarm-modal__buttons">
+    <tickets-modal-buttons
+      (savedClicked)="handleButtonClicked($event)"
+      saveText="Confirm"
+    />
+  </div>
+</div>
