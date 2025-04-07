@@ -1,0 +1,60 @@
+<div class="tickets-categories-modal__container">
+  <tickets-modal-header
+    [title]="data.mode === CategoriesModalMode.EDIT ? 'Edit Category' : 'Create Category'"
+    (closeClicked)="close()"
+  ></tickets-modal-header>
+
+  <form class="tickets-categories-modal__form" [formGroup]="form">
+    <div class="tickets-categories-modal__form-field">
+      <label
+        for="name"
+        class="tickets-categories-modal__label"
+      >
+        Name
+      </label>
+      <input
+        formControlName="name"
+        id="name"
+        class="tickets-categories-modal__input"
+        type="text"
+      />
+    </div>
+
+    <div class="tickets-categories-modal__form-field">
+      <label
+        for="description"
+        class="tickets-categories-modal__label"
+      >
+        Description
+      </label>
+      <textarea
+        formControlName="description"
+        class="tickets-categories-modal__textarea"
+        id="description"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <div class="tickets-categories-modal__form-field">
+      <label
+        for="parentCategoryId"
+        class="tickets-categories-modal__label"
+      >
+        Parent Category ID
+      </label>
+      <input
+        formControlName="parentCategoryId"
+        id="parentCategoryId"
+        class="tickets-categories-modal__input"
+        type="number"
+      />
+    </div>
+
+    <tickets-modal-buttons
+      [closeText]="'Cancel'"
+      [saveText]="'Save'"
+      [disabled]="form.invalid"
+      (savedClicked)="onSave($event)"
+    ></tickets-modal-buttons>
+  </form>
+</div>
