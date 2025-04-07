@@ -4,9 +4,9 @@ import { ComponentType } from '@angular/cdk/portal';
 import { firstValueFrom } from 'rxjs';
 
 export enum ModalStyle {
-  Small = 'sh-small-modal',
-  Default = 'sh-modal',
-  ConfirmModal = 'sh-confirm-modal',
+  Small = 'tickets-small-modal',
+  Default = 'tickets-modal',
+  ConfirmModal = 'tickets-confirm-modal',
 }
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -23,7 +23,7 @@ export class ModalService {
     const close$ = this.modal
       .open<C, D, R>(component, {
         data: config.data,
-        panelClass: ['sh-modal', config.style || ModalStyle.Default],
+        panelClass: ['tickets-modal', config.style || ModalStyle.Default],
       })
       .afterClosed();
 

@@ -18,8 +18,8 @@ export class ConfirmModalComponent {
   data: ConfirmModalData = inject(MAT_DIALOG_DATA);
   dialogRef = inject(MatDialogRef<ConfirmModalComponent>);
 
-  title = this.data.title || 'Are you sure?';
-  description = this.data.description;
+  title = this?.data?.title || 'Are you sure?';
+  description = this?.data?.description;
 
   close(wasSavedClicked?: boolean) {
     this.dialogRef.close(wasSavedClicked);

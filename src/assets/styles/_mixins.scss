@@ -3,6 +3,10 @@
 @mixin clear-button {
   background-color: transparent;
   border: none;
+
+  :hover {
+    cursor: pointer;
+  }
 }
 
 @mixin default-input($border-color: #ccc, $focus-border-color: #007bff) {
@@ -34,28 +38,36 @@
 }
 
 @mixin modal-styles {
-  .sh-modal {
-    color: var(--black);
-    background: var(--background-color);
+  .tickets-modal {
+    border-radius: $main-size * 2;
     padding: $main-size * 8;
+    background-color: $white;
     width: 80%;
     height: 60%;
     max-width: 800px !important;
     max-height: 600px !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08) !important;
-    border-radius: $border-radius;
+
+    .mat-mdc-dialog-container .mdc-dialog__surface {
+      border-radius: 0px !important;
+      padding: 0px !important;
+    }
+
 
     .mat-mdc-dialog-surface.mdc-dialog__surface {
       background: var(--background-color) !important;
       box-shadow: none;
+      padding: 0!important;
+      margin: 0!important;
     }
   }
 
-  .sh-small-modal {
+  .tickets-small-modal {
     max-height: 350px !important;
   }
 
-  .sh-confirm-modal {
+  .tickets-confirm-modal {
     max-height: 250px !important;
+    max-width: 400px !important;
   }
 }
