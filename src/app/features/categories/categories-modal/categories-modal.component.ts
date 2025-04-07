@@ -9,14 +9,14 @@ import { ToastService } from '../../../core/services/toast.service';
 import { ToastSeverity } from '../../../core/services/types/toast.model';
 
 @Component({
-  selector: 'tickets-zzzzz',
+  selector: 'tickets-categories-modal',
   imports: [ReactiveFormsModule, ModalHeaderComponent, ModalButtonsComponent],
   templateUrl: './categories-modal.component.html',
   styleUrl: './categories-modal.component.scss',
 })
 export class CategoriesModalComponent implements OnInit {
-  toastService = inject(ToastService);
   categoriesApiService = inject(CategoriesApiService);
+  toastService = inject(ToastService);
   dialogRef = inject(MatDialogRef);
   data: CategoriesModalData = inject(MAT_DIALOG_DATA);
   formBuilder = inject(FormBuilder);
