@@ -5,15 +5,17 @@ import { PaginationOptions, PaginationOutput } from '../../../shared/models';
 import { buildPaginationParams, withAuthHeaders } from '../../../shared/functions';
 import { firstValueFrom } from 'rxjs';
 import { Category, CreateCategory } from './types';
+import { AuthService } from '../../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoriesApiService {
+  authService = inject(AuthService);
   http = inject(HttpClient);
 
   async createCategory(data: CreateCategory): Promise<Category> {
-    const headers = withAuthHeaders();
+    const headers = withAuthHeaders(this.authService);
     const category$ = this.http.post<Category>(`${environment.apiRoot}/categories`, data, { ...headers });
 
     return await firstValueFrom(category$);
@@ -40,14 +42,14 @@ export class CategoriesApiService {
   }
 
   async updateCategory(id: number, data: Partial<Category>): Promise<Category> {
-    const headers = withAuthHeaders();
+    const headers = withAuthHeaders(this.authService);
     const category$ = this.http.put<Category>(`${environment.apiRoot}/categories/${id}`, data, { ...headers });
 
     return await firstValueFrom(category$);
   }
 
   async deleteCategory(id: number): Promise<void> {
-    const headers = withAuthHeaders();
+    const headers = withAuthHeaders(this.authService);
     const category$ = this.http.delete<void>(`${environment.apiRoot}/categories/${id}`, { ...headers });
 
     return await firstValueFrom(category$);

@@ -1,6 +1,6 @@
-import { Component, computed, input, model, output } from '@angular/core';
+import { Component, computed, input, model, output, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { CustomDatasource, PageChangeEvent, TableColumn } from './table.assets';
 import { MatFormField, MatInputModule } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
@@ -14,6 +14,8 @@ import { MatIconButton } from '@angular/material/button';
   standalone: true,
 })
 export class TableComponent<T> {
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+  canAddItem = input<boolean>(false);
   isSearchable = input<boolean>(false);
   isPageable = input<boolean>(false);
   tableColumns = input.required<TableColumn[]>();
@@ -28,6 +30,7 @@ export class TableComponent<T> {
   editClicked = output<T>();
   deleteClicked = output<T>();
   rowClicked = output<T>();
+  addClicked = output<void>();
 
   displayedColumns = computed(() => {
     const columns = this.tableColumns().map(column => column.name);
@@ -64,5 +67,9 @@ export class TableComponent<T> {
 
   onRowClicked(data: T) {
     this.rowClicked.emit(data);
+  }
+
+  onAddClicked() {
+    this.addClicked.emit();
   }
 }
