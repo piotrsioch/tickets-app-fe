@@ -3,6 +3,8 @@ import { TableComponent } from '../../shared/components/table/table.component';
 import { CategoriesApiService, Category } from '../../core/api/categories';
 import { CustomDatasource, PageChangeEvent, TableColumn } from '../../shared/components/table/table.assets';
 import { PaginationOptions } from '../../shared/models';
+import { ModalService, ModalStyle } from '../../shared/services/modal.service';
+import { ConfirmModalComponent } from '../../shared/components/modal/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'tickets-categories',
@@ -11,6 +13,7 @@ import { PaginationOptions } from '../../shared/models';
   styleUrl: './categories.component.scss',
 })
 export class CategoriesComponent implements OnInit {
+  modal = inject(ModalService);
   categoriesApiService = inject(CategoriesApiService);
   categoriesColumns = signal<TableColumn[]>([
     {
@@ -57,6 +60,7 @@ export class CategoriesComponent implements OnInit {
 
   async onDeleteClicked(category: Category) {
     console.log('Deleted: ', category.id);
+    await this.modal.open(ConfirmModalComponent, { style: ModalStyle.ConfirmModal });
   }
 
   private async loadCategories(options?: PaginationOptions): Promise<void> {

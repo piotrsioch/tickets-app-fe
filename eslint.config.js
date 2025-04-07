@@ -22,6 +22,7 @@ module.exports = tseslint.config(
           style: 'camelCase',
         },
       ],
+      '@typescript-eslint/no-unused-expressions': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
