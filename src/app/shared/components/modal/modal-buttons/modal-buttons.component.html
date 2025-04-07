@@ -1,0 +1,15 @@
+<div class="tickets-modal-buttons__container">
+  <button
+    (click)="close(false)"
+    class="tickets-modal-buttons__close"
+  >
+    {{ closeText() }}
+  </button>
+  <button
+    [disabled]="disabled()"
+    (click)="close(true)"
+    class="tickets-modal-buttons__save"
+  >
+    {{ saveText() }}
+  </button>
+</div>
