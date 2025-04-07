@@ -1,0 +1,16 @@
+@import "variables";
+@import "mixins";
+
+.tickets-modal-buttons {
+  &__container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__close, &__save {
+    @include clear-button;
+    @include default-button;
+  }
+}

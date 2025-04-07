@@ -1,0 +1,14 @@
+@import "variables";
+
+.tickets-confirm-modal {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__description {
+    margin-top: $main-size * 8;
+    flex: 1;
+  }
+}

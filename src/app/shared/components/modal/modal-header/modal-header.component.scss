@@ -1,0 +1,20 @@
+@import "mixins";
+@import "variables";
+
+.tickets-modal-header {
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: $main-size * 4.5;
+    font-weight: 700;
+  }
+
+  &__close {
+    @include clear-button;
+    color: black;
+  }
+}
