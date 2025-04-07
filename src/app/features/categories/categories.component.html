@@ -6,7 +6,7 @@
     [isPageable]="true"
     [isSearchable]="true"
     [paginationSizes]="[5, 10, 20]"
-    [defaultPageSize]="10"
+    [defaultPageSize]="currentPaginationData().limit"
     [totalItemCount]="categories()?.total!"
     (pageChanged)="onPageChanged($event)"
     (searchChanged)="onSearchChanged($event)"
