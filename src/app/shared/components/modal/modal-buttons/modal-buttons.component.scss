@@ -1,5 +1,4 @@
-@import "variables";
-@import "mixins";
+@use "mixins";
 
 .tickets-modal-buttons {
   &__container {
@@ -10,7 +9,7 @@
   }
 
   &__close, &__save {
-    @include clear-button;
-    @include default-button;
+    @include mixins.clear-button;
+    @include mixins.default-button;
   }
 }
