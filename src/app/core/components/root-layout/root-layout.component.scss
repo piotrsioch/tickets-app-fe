@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables';
 
 html, body {
   height: 100%;
@@ -13,17 +13,17 @@ html, body {
     width: 100%;
     overflow: auto;
     background-color: #f4f4f4;
-    padding: 0 10 * $main-size;
+    padding: 0 10 * variables.$main-size;
   }
 
   &__navbar {
     width: 100%;
-    height: $navbar-height;
+    height: variables.$navbar-height;
   }
 
   &__main {
-    margin-top: $main-size * 10;
-    height: calc(100vh - $navbar-height - $main-size * 10 * 2);
+    margin-top: variables.$main-size * 10;
+    height: calc(100vh - #{variables.$navbar-height} - #{variables.$main-size * 10 * 2});
     width: 100%;
     overflow: auto;
   }

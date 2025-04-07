@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { ToastSeverity } from '../../core/services/types/toast.model';
 import { ToastService } from '../../core/services/toast.service';
 import { Router } from '@angular/router';
+import { passwordMatchValidator } from '../../shared/functions/password-match.validator';
 
 @Component({
   selector: 'tickets-register',
@@ -17,14 +18,17 @@ export class RegisterComponent {
   toastService = inject(ToastService);
   router = inject(Router);
 
-  registerForm = this.formBuilder.group({
-    email: [''],
-    password: [''],
-    confirmPassword: [''],
-    firstName: [''],
-    lastName: [''],
-    phoneNumber: [''],
-  });
+  registerForm = this.formBuilder.group(
+    {
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.pattern(/^(\+48)?\s?\d{9}$/)]],
+    },
+    { validators: passwordMatchValidator }
+  );
 
   async onRegister() {
     try {
@@ -50,5 +54,9 @@ export class RegisterComponent {
       console.error(error);
       this.toastService.show('Error during register', ToastSeverity.ERROR);
     }
+  }
+
+  async onLogin() {
+    await this.router.navigate(['/login']);
   }
 }

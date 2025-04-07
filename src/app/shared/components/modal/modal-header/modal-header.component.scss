@@ -1,5 +1,5 @@
-@import "mixins";
-@import "variables";
+@use "mixins";
+@use "variables";
 
 .tickets-modal-header {
   &__container {
@@ -9,12 +9,12 @@
   }
 
   &__title {
-    font-size: $main-size * 4.5;
+    font-size: variables.$main-size * 4.5;
     font-weight: 700;
   }
 
   &__close {
-    @include clear-button;
+    @include mixins.clear-button;
     color: black;
   }
 }
