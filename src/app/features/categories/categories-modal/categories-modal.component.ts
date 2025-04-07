@@ -2,14 +2,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CategoriesModalData, CategoriesModalMode } from './categories-modal.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ModalHeaderComponent } from '../../../../shared/components/modal/modal-header/modal-header.component';
-import { ModalButtonsComponent } from '../../../../shared/components/modal/modal-buttons/modal-buttons.component';
-import { CategoriesApiService, Category, CreateCategory } from '../../../../core/api/categories';
-import { ToastService } from '../../../../core/services/toast.service';
-import { ToastSeverity } from '../../../../core/services/types/toast.model';
+import { ModalHeaderComponent } from '../../../shared/components/modal/modal-header/modal-header.component';
+import { ModalButtonsComponent } from '../../../shared/components/modal/modal-buttons/modal-buttons.component';
+import { CategoriesApiService, Category, CreateCategory } from '../../../core/api/categories';
+import { ToastService } from '../../../core/services/toast.service';
+import { ToastSeverity } from '../../../core/services/types/toast.model';
 
 @Component({
-  selector: 'tickets-categories-modal',
+  selector: 'tickets-zzzzz',
   imports: [ReactiveFormsModule, ModalHeaderComponent, ModalButtonsComponent],
   templateUrl: './categories-modal.component.html',
   styleUrl: './categories-modal.component.scss',

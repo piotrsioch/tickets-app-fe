@@ -5,8 +5,8 @@ import { CustomDatasource, PageChangeEvent, TableColumn } from '../../shared/com
 import { PaginationOptions } from '../../shared/models';
 import { ModalService, ModalStyle } from '../../shared/services/modal.service';
 import { ConfirmModalComponent } from '../../shared/components/modal/confirm-modal/confirm-modal.component';
-import { CategoriesModalComponent } from './categories-modal/categories-modal/categories-modal.component';
-import { CategoriesModalMode } from './categories-modal/categories-modal/categories-modal.model';
+import { CategoriesModalComponent } from './categories-modal/categories-modal.component';
+import { CategoriesModalMode } from './categories-modal/categories-modal.model';
 
 export interface PaginationData {
   page: number;
@@ -80,12 +80,10 @@ export class CategoriesComponent implements OnInit {
 
   async onDeleteClicked(category: Category) {
     const wasDeleted = await this.modal.open(ConfirmModalComponent, { style: ModalStyle.ConfirmModal });
+
     if (!wasDeleted) {
       return;
     }
-
-    const { page, limit } = this.currentPaginationData();
-    const search = this.search();
 
     await this.categoriesApiService.deleteCategory(category.id);
 
@@ -94,7 +92,11 @@ export class CategoriesComponent implements OnInit {
       return;
     }
 
-    await this.loadCategories({ search, page, limit });
+    const categories = this.categories();
+    const newCategories = categories!.data.filter(cat => cat.id !== category.id);
+    const newTotal = categories!.total - 1;
+
+    this.categories.set({ data: newCategories, total: newTotal });
   }
 
   async onAddClicked() {

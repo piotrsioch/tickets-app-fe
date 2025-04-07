@@ -1,4 +1,4 @@
-import { Category } from '../../../../core/api/categories';
+import { Category } from '../../../core/api/categories';
 
 export enum CategoriesModalMode {
   EDIT = 'edit',
