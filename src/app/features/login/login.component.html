@@ -24,11 +24,18 @@
     </div>
     <div class="tickets-login__buttons">
       <button
+        [disabled]="loginForm.invalid"
         (click)="onLogin()"
         class="tickets-login__button"
       >
         Login
       </button>
+    </div>
+    <div
+      (click)="onRegister()"
+      class="tickets-login__register"
+    >
+      <span>Don't have an account? <u>Sign up</u></span>
     </div>
   </div>
 </div>
