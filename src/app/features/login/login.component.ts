@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../../core/services/toast.service';
@@ -18,8 +18,8 @@ export class LoginComponent {
   router = inject(Router);
 
   loginForm = this.formBuilder.group({
-    email: [''],
-    password: [''],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   async onLogin() {
@@ -36,5 +36,9 @@ export class LoginComponent {
       console.error(error);
       this.toastService.show('Error during login', ToastSeverity.ERROR);
     }
+  }
+
+  async onRegister() {
+    await this.router.navigate(['/register']);
   }
 }

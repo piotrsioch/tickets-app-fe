@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .tickets-confirm-modal {
   &__container {
@@ -8,7 +8,7 @@
   }
 
   &__description {
-    margin-top: $main-size * 8;
+    margin-top: variables.$main-size * 8;
     flex: 1;
   }
 }

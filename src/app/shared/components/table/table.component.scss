@@ -1,7 +1,7 @@
-@import 'variables';
-@import 'mixins';
+@use 'variables';
+@use 'mixins';
 
-$search-height: 13 * $main-size;
+$search-height: 13 * variables.$main-size;
 
 :host ::ng-deep {
   .mat-mdc-paginator {
@@ -88,7 +88,7 @@ $search-height: 13 * $main-size;
   }
 
   &__add-button {
-    @include default-button();
+    @include mixins.default-button();
     height: $search-height;
   }
 }
