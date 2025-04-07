@@ -1,20 +1,32 @@
 @if(tableDataSource()) {
   <div class="tickets-table__container">
-      @if(isSearchable()) {
-      <div
-        class="tickets-table__search"
-        matColumnDef="filter"
-      >
-        <mat-form-field>
-          <mat-label>Search</mat-label>
-          <input
-            (input)="onSearchInput($event)"
-            (keydown.enter)="onSearchChanged()"
-            placeholder="filter"
-            matInput
-          ></mat-form-field>
+    @if(isSearchable() || canAddItem()) {
+      <div class="tickets-table__top-container">
+        @if(isSearchable()) {
+          <div
+            class="tickets-table__search"
+            matColumnDef="filter"
+          >
+            <mat-form-field>
+              <mat-label>Search</mat-label>
+              <input
+                (input)="onSearchInput($event)"
+                (keydown.enter)="onSearchChanged()"
+                placeholder="filter"
+                matInput
+              ></mat-form-field>
+          </div>
+        }
+        @if(canAddItem()) {
+            <button
+              (click)="onAddClicked()"
+              class="tickets-table__add-button"
+            >
+              Add
+            </button>
+        }
       </div>
-      }
+    }
 
       <table
         [dataSource]="tableDataSource()"

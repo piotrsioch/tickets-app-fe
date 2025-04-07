@@ -2,6 +2,7 @@
   <tickets-table
     [tableColumns]="categoriesColumns()"
     [tableData]="categories()!"
+    [canAddItem]="true"
     [isPageable]="true"
     [isSearchable]="true"
     [paginationSizes]="[5, 10, 20]"
@@ -11,5 +12,6 @@
     (searchChanged)="onSearchChanged($event)"
     (editClicked)="onEditClicked($event)"
     (deleteClicked)="onDeleteClicked($event)"
+    (addClicked)="onAddClicked()"
   ></tickets-table>
 </div>

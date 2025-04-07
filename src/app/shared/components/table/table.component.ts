@@ -14,6 +14,7 @@ import { MatIconButton } from '@angular/material/button';
   standalone: true,
 })
 export class TableComponent<T> {
+  canAddItem = input<boolean>(false);
   isSearchable = input<boolean>(false);
   isPageable = input<boolean>(false);
   tableColumns = input.required<TableColumn[]>();
@@ -28,6 +29,7 @@ export class TableComponent<T> {
   editClicked = output<T>();
   deleteClicked = output<T>();
   rowClicked = output<T>();
+  addClicked = output<void>();
 
   displayedColumns = computed(() => {
     const columns = this.tableColumns().map(column => column.name);
@@ -64,5 +66,9 @@ export class TableComponent<T> {
 
   onRowClicked(data: T) {
     this.rowClicked.emit(data);
+  }
+
+  onAddClicked() {
+    this.addClicked.emit();
   }
 }

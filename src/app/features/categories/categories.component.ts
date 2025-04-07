@@ -63,6 +63,10 @@ export class CategoriesComponent implements OnInit {
     await this.modal.open(ConfirmModalComponent, { style: ModalStyle.ConfirmModal });
   }
 
+  async onAddClicked() {
+    console.log('Add clicked');
+  }
+
   private async loadCategories(options?: PaginationOptions): Promise<void> {
     const optionsWithSearch: PaginationOptions = options
       ? { ...options, searchFields: ['name', 'description'] }
