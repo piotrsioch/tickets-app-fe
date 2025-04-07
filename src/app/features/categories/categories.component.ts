@@ -55,8 +55,6 @@ export class CategoriesComponent implements OnInit {
   }
 
   async onPageChanged(data: PageChangeEvent) {
-    console.log('CHANGED');
-    console.log(data);
     const search = this.search();
     const { pageIndex: page, pageSize: limit } = data;
 
@@ -91,12 +89,9 @@ export class CategoriesComponent implements OnInit {
 
     await this.categoriesApiService.deleteCategory(category.id);
 
-    if (this.categories()!.data.length === 1) {
-      console.log(1);
-      this.tableComponent.pageChanged.emit({
-        pageIndex: Math.max(page - 1, 0),
-        pageSize: limit,
-      });
+    if (this.categories()!.data.length === 1 && this.tableComponent.paginator) {
+      this.tableComponent.paginator.previousPage();
+      return;
     }
 
     await this.loadCategories({ search, page, limit });
