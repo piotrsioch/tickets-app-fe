@@ -1,4 +1,4 @@
-@import 'mixins';
+@use 'mixins';
 
 .tickets-login {
   &__container {
@@ -33,7 +33,7 @@
   }
 
   &__input {
-    @include default-input();
+    @include mixins.default-input();
   }
 
   &__buttons {
@@ -42,6 +42,6 @@
   }
 
   &__button {
-    @include default-button();
+    @include mixins.default-button();
   }
 }
