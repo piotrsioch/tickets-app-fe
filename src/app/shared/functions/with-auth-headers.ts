@@ -1,9 +1,7 @@
-import { inject } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../core/services/auth.service';
 
-export function withAuthHeaders() {
-  const authService = inject(AuthService);
+export function withAuthHeaders(authService: AuthService) {
   const token = authService.userToken();
 
   return token
