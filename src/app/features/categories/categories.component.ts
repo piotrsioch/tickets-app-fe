@@ -5,6 +5,8 @@ import { CustomDatasource, PageChangeEvent, TableColumn } from '../../shared/com
 import { PaginationOptions } from '../../shared/models';
 import { ModalService, ModalStyle } from '../../shared/services/modal.service';
 import { ConfirmModalComponent } from '../../shared/components/modal/confirm-modal/confirm-modal.component';
+import { CategoriesModalComponent } from './categories-modal/categories-modal/categories-modal.component';
+import { CategoriesModalMode } from './categories-modal/categories-modal/categories-modal.model';
 
 @Component({
   selector: 'tickets-categories',
@@ -56,15 +58,20 @@ export class CategoriesComponent implements OnInit {
 
   async onEditClicked(category: Category): Promise<void> {
     console.log('Edited: ', category.id);
+    const updatedCategory = await this.modal.open(CategoriesModalComponent, {
+      data: { category, mode: CategoriesModalMode.EDIT },
+    });
+    console.log(updatedCategory);
   }
 
-  async onDeleteClicked(category: Category) {
-    console.log('Deleted: ', category.id);
-    await this.modal.open(ConfirmModalComponent, { style: ModalStyle.ConfirmModal });
+  async onDeleteClicked(_category: Category) {
+    const data = await this.modal.open(ConfirmModalComponent, { style: ModalStyle.ConfirmModal });
+    console.log(data);
   }
 
   async onAddClicked() {
-    console.log('Add clicked');
+    const category = await this.modal.open(CategoriesModalComponent, { data: { mode: CategoriesModalMode.CREATE } });
+    console.log(category);
   }
 
   private async loadCategories(options?: PaginationOptions): Promise<void> {
