@@ -3,6 +3,7 @@ import { LoginComponent } from './features/login/login.component';
 import { RegisterComponent } from './features/register/register.component';
 import { HomeComponent } from './features/home/home.component';
 import { CategoriesComponent } from './features/categories/categories.component';
+import {AdminEventsComponent} from './features/events/admin-events/admin-events.component';
 
 export const routes: Routes = [
   {
@@ -21,5 +22,12 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
   },
-  { path: 'categories', component: CategoriesComponent },
+  {
+    path: 'categories',
+    component: CategoriesComponent
+  },
+  {
+    path: 'admin-events',
+    component: AdminEventsComponent
+  },
 ];
