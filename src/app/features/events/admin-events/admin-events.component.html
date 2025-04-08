@@ -1,13 +1,13 @@
-<div class="tickets-categories__container">
+<div class="tickets-admin-events__container">
   <tickets-table
-    [tableColumns]="categoriesColumns()"
-    [tableData]="categories()!"
+    [tableColumns]="eventsColumns()"
+    [tableData]="events()!"
     [canAddItem]="true"
     [isPageable]="true"
     [isSearchable]="true"
     [paginationSizes]="[5, 10, 20]"
     [defaultPageSize]="currentPaginationData().limit"
-    [totalItemCount]="categories()?.total!"
+    [totalItemCount]="events()?.total!"
     (pageChanged)="onPageChanged($event)"
     (searchChanged)="onSearchChanged($event)"
     (editClicked)="onEditClicked($event)"
