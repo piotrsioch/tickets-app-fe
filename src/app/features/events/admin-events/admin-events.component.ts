@@ -7,6 +7,7 @@ import {EventsApiService} from '../../../core/api/events';
 import {PaginationData} from '../../categories/categories.component';
 import { Event } from '../../../core/api/events'
 import {PaginationOptions} from '../../../shared/models';
+import {AdminEventsModalComponent} from './admin-events-modal/admin-events-modal.component';
 
 @Component({
   selector: 'tickets-admin-events',
@@ -65,56 +66,56 @@ export class AdminEventsComponent {
   }
 
   async onEditClicked(event: Event): Promise<void> {
-    // const updatedEvent = await this.modal.open(AdminEventsModalComponent, {
-    //   data: { event, mode: 'edit' },
-    // });
-    //
-    // if (!updatedEvent) {
-    //   return;
-    // }
-    //
-    // const events = this.events();
-    // const newEvents = events!.data.map(ev => (ev.id === updatedEvent.id ? updatedEvent : ev));
-    //
-    // this.events.set({ data: newEvents, total: events!.total });
+    const updatedEvent = await this.modal.open(AdminEventsModalComponent, {
+      data: { event, mode: 'edit' },
+    });
+
+    if (!updatedEvent) {
+      return;
+    }
+
+    const events = this.events();
+    const newEvents = events!.data.map(ev => (ev.id === updatedEvent.id ? updatedEvent : ev));
+
+    this.events.set({ data: newEvents, total: events!.total });
   }
 
   async onDeleteClicked(event: Event) {
-    // const wasDeleted = await this.modal.open(ConfirmModalComponent, { style: ModalStyle.ConfirmModal });
-    //
-    // if (!wasDeleted) {
-    //   return;
-    // }
-    //
-    // await this.eventsApiService.deleteEvent(event.id);
-    //
-    // if (this.events()!.data.length === 1 && this.tableComponent.paginator) {
-    //   this.tableComponent.paginator.previousPage();
-    //   return;
-    // }
-    //
-    // const events = this.events();
-    // const newEvents = events!.data.filter(ev => ev.id !== event.id);
-    // const newTotal = events!.total - 1;
-    //
-    // this.events.set({ data: newEvents, total: newTotal });
+    const wasDeleted = await this.modal.open(ConfirmModalComponent, { style: ModalStyle.ConfirmModal });
+
+    if (!wasDeleted) {
+      return;
+    }
+
+    await this.eventsApiService.deleteEvent(event.id);
+
+    if (this.events()!.data.length === 1 && this.tableComponent.paginator) {
+      this.tableComponent.paginator.previousPage();
+      return;
+    }
+
+    const events = this.events();
+    const newEvents = events!.data.filter(ev => ev.id !== event.id);
+    const newTotal = events!.total - 1;
+
+    this.events.set({ data: newEvents, total: newTotal });
   }
 
   async onAddClicked() {
-    // const newEvent = await this.modal.open(AdminEventsModalComponent, { data: { mode: 'create' } });
-    //
-    // if (newEvent) {
-    //   const events = this.events();
-    //   const currentPaginationData = this.currentPaginationData();
-    //   const newTotal = events!.total + 1;
-    //
-    //   if (events!.data.length < currentPaginationData.limit) {
-    //     const newEvents = [...events!.data, newEvent];
-    //     this.events.set({ data: newEvents, total: newTotal });
-    //   } else {
-    //     this.events.set({ data: events!.data, total: newTotal });
-    //   }
-    // }
+    const newEvent = await this.modal.open(AdminEventsModalComponent, { data: { mode: 'create' } });
+
+    if (newEvent) {
+      const events = this.events();
+      const currentPaginationData = this.currentPaginationData();
+      const newTotal = events!.total + 1;
+
+      if (events!.data.length < currentPaginationData.limit) {
+        const newEvents = [...events!.data, newEvent];
+        this.events.set({ data: newEvents, total: newTotal });
+      } else {
+        this.events.set({ data: events!.data, total: newTotal });
+      }
+    }
   }
 
   private async loadEvents(options?: PaginationOptions): Promise<void> {

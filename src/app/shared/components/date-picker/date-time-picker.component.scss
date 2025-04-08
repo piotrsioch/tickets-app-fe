@@ -1,0 +1,8 @@
+@use 'variables';
+
+.tickets-date-time-picker {
+  &__container {
+    display: flex;
+    gap: variables.$main-size * 8;
+  }
+}
