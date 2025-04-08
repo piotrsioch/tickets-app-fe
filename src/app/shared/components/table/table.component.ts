@@ -5,10 +5,11 @@ import { CustomDatasource, PageChangeEvent, TableColumn } from './table.assets';
 import { MatFormField, MatInputModule } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'tickets-table',
-  imports: [MatTableModule, MatPaginatorModule, MatFormField, MatInputModule, MatIcon, MatIconButton],
+  imports: [MatTableModule, MatPaginatorModule, MatFormField, MatInputModule, MatIcon, MatIconButton, DatePipe],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
   standalone: true,

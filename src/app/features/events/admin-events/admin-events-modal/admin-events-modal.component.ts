@@ -1,22 +1,13 @@
-import {Component, inject} from '@angular/core';
-import {ToastSeverity} from '../../../../core/services/types/toast.model';
-import {CreateEvent, Event, EventsApiService} from '../../../../core/api/events';
-import {ToastService} from '../../../../core/services/toast.service';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
-import {ModalButtonsComponent} from '../../../../shared/components/modal/modal-buttons/modal-buttons.component';
-import {ModalHeaderComponent} from '../../../../shared/components/modal/modal-header/modal-header.component';
-import {EventModalData} from './admin-events-modal.model';
-import {MatInputModule, } from '@angular/material/input';
-import {
-  MatDatepickerModule,
-} from '@angular/material/datepicker';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {
-  MatNativeDateModule,
-  provideNativeDateAdapter
-} from '@angular/material/core';
-import {MatButtonModule} from '@angular/material/button';
+import { Component, inject, OnInit } from '@angular/core';
+import { ToastSeverity } from '../../../../core/services/types/toast.model';
+import { CreateEvent, Event, EventsApiService } from '../../../../core/api/events';
+import { ToastService } from '../../../../core/services/toast.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ModalButtonsComponent } from '../../../../shared/components/modal/modal-buttons/modal-buttons.component';
+import { ModalHeaderComponent } from '../../../../shared/components/modal/modal-header/modal-header.component';
+import { EventModalData } from './admin-events-modal.model';
+import { DateTimePickerComponent } from '../../../../shared/components/date-picker/date-time-picker.component';
 
 @Component({
   selector: 'tickets-admin-events-modal',
@@ -24,24 +15,14 @@ import {MatButtonModule} from '@angular/material/button';
     ModalButtonsComponent,
     ReactiveFormsModule,
     ModalHeaderComponent,
-    MatDatepickerModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
     ReactiveFormsModule,
-  ],  providers: [
-    provideNativeDateAdapter(),
-    // {provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS},
+    DateTimePickerComponent,
   ],
+  providers: [],
   templateUrl: './admin-events-modal.component.html',
-  styleUrl: './admin-events-modal.component.scss'
+  styleUrl: './admin-events-modal.component.scss',
 })
-export class AdminEventsModalComponent {
+export class AdminEventsModalComponent implements OnInit {
   eventsApiService = inject(EventsApiService);
   toastService = inject(ToastService);
   dialogRef = inject(MatDialogRef);
@@ -49,29 +30,33 @@ export class AdminEventsModalComponent {
   formBuilder = inject(FormBuilder);
 
   form = this.formBuilder.group({
-    name: ['', { nonNullable: true }],
-    eventDate: [null, { nonNullable: true }],
-    venue: ['', { nonNullable: true }],
-    availableTickets: [0, { nonNullable: true }],
-    pricePerTicket: [0, { nonNullable: true }],
-    salesStartDate: [null, { nonNullable: true }],
-    salesEndDate: [null, { nonNullable: true }],
-    duration: [0, { nonNullable: true }],
+    name: new FormControl<string | null>(null),
+    eventDate: new FormControl<Date | null>(null),
+    venue: new FormControl<string | null>(null),
+    availableTickets: new FormControl<number | null>(null),
+    pricePerTicket: new FormControl<number | null>(null),
+    mainCategoryId: new FormControl<number | null>(null),
+    subcategoriesId: new FormControl<number[] | null>(null),
+    salesStartDate: new FormControl<Date | null>(null),
+    salesEndDate: new FormControl<Date | null>(null),
+    duration: new FormControl<number | null>(null),
   });
 
   ngOnInit() {
-    // if (this.data?.event) {
-    //   this.form.patchValue({
-    //     name: this.data.event.name,
-    //     eventDate: new Date(this.data.event.eventDate),  // Przekształcenie na Date
-    //     venue: this.data.event.venue,
-    //     availableTickets: this.data.event.availableTickets,
-    //     pricePerTicket: this.data.event.pricePerTicket,
-    //     salesStartDate: new Date(this.data.event.salesStartDate), // Przekształcenie na Date
-    //     salesEndDate: new Date(this.data.event.salesEndDate), // Przekształcenie na Date
-    //     duration: this.data.event.duration,
-    //   });
-    // }
+    if (this.data?.event) {
+      this.form.patchValue({
+        name: this.data.event.name,
+        eventDate: new Date(this.data.event.eventDate),
+        venue: this.data.event.venue,
+        mainCategoryId: this.data.event.mainCategoryId,
+        subcategoriesId: this.data.event.subcategoriesIds,
+        availableTickets: this.data.event.availableTickets,
+        pricePerTicket: this.data.event.pricePerTicket,
+        salesStartDate: new Date(this.data.event.salesStartDate),
+        salesEndDate: new Date(this.data.event.salesEndDate),
+        duration: this.data.event.duration,
+      });
+    }
   }
 
   async onSave(wasSaveClicked: boolean) {
@@ -79,20 +64,62 @@ export class AdminEventsModalComponent {
       this.close();
     }
 
-    const { name, eventDate, venue, availableTickets, pricePerTicket, salesStartDate, salesEndDate, duration } = this.form.value as Partial<Event>;
+    const {
+      name,
+      eventDate,
+      venue,
+      availableTickets,
+      pricePerTicket,
+      salesStartDate,
+      salesEndDate,
+      duration,
+      mainCategoryId,
+      subcategoriesIds,
+    } = this.form.value as Partial<Event>;
 
-    if (!name || !venue) {
-      this.toastService.show('Name and venue are required', ToastSeverity.ERROR);
+    console.log(this.form.value);
+    if (
+      !name ||
+      !venue ||
+      !eventDate ||
+      !availableTickets ||
+      !pricePerTicket ||
+      !salesStartDate ||
+      !salesEndDate ||
+      !duration ||
+      !mainCategoryId
+    ) {
+      this.toastService.show('You need to pass all fields', ToastSeverity.ERROR);
       return;
     }
 
     const isFormDataDifferent = this.isFormDataDifferentFromPassedValue();
 
-    // if (isFormDataDifferent) {
-    //   this.data.mode === 'create'
-    //     ? await this.createEvent({ name, eventDate, venue, availableTickets, pricePerTicket, salesStartDate, salesEndDate, duration })
-    //     : await this.updateEvent(this.data.event!.id, { name, eventDate, venue, availableTickets, pricePerTicket, salesStartDate, salesEndDate, duration });
-    // }
+    if (isFormDataDifferent) {
+      this.data.mode === 'create'
+        ? await this.createEvent({
+            name,
+            eventDate,
+            venue,
+            availableTickets,
+            pricePerTicket,
+            salesStartDate,
+            salesEndDate,
+            duration,
+            mainCategoryId,
+            subcategoriesIds,
+          })
+        : await this.updateEvent(this.data.event!.id, {
+            name,
+            eventDate,
+            venue,
+            availableTickets,
+            pricePerTicket,
+            salesStartDate,
+            salesEndDate,
+            duration,
+          });
+    }
   }
 
   close() {
@@ -103,21 +130,22 @@ export class AdminEventsModalComponent {
     const formValue = this.form.value;
     const original = this.data?.event;
 
-    if (!original) return true; return false;
+    if (!original) return true;
 
-    // return (
-    //   formValue.name !== original.name ||
-    //   formValue.venue !== original.venue ||
-    //   formValue.availableTickets !== original.availableTickets ||
-    //   formValue.pricePerTicket !== original.pricePerTicket ||
-    //   formValue.salesStartDate !== original.salesStartDate ||
-    //   formValue.salesEndDate !== original.salesEndDate ||
-    //   formValue.duration !== original.duration
-    // );
+    return (
+      formValue.name !== original.name ||
+      formValue.venue !== original.venue ||
+      formValue.availableTickets !== original.availableTickets ||
+      formValue.pricePerTicket !== original.pricePerTicket ||
+      formValue.salesStartDate !== original.salesStartDate ||
+      formValue.salesEndDate !== original.salesEndDate ||
+      formValue.duration !== original.duration
+    );
   }
 
   private async createEvent(event: CreateEvent): Promise<void> {
     try {
+      console.log(event);
       const newEvent = await this.eventsApiService.createEvent(event);
       this.toastService.show('Event created', ToastSeverity.SUCCESS);
       this.dialogRef.close(newEvent);

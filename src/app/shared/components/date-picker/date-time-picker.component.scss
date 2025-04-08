@@ -3,6 +3,12 @@
 .tickets-date-time-picker {
   &__container {
     display: flex;
+    flex-direction: column;
+    gap: variables.$main-size * 3;
+  }
+
+  &__picker {
+    display: flex;
     gap: variables.$main-size * 8;
   }
 }

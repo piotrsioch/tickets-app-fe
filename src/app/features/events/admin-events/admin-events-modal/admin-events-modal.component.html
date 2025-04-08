@@ -10,20 +10,19 @@
       <input formControlName="name" id="name" class="tickets-admin-events-modal__input" type="text" />
     </div>
 
-    <!-- Event Date (Date and Time) -->
-    <div class="tickets-admin-events-modal__form-field">
-      <label for="eventDate" class="tickets-admin-events-modal__label">Event Date</label>
-      <mat-form-field class="tickets-admin-events-modal__input">
-        <mat-label>Event Date</mat-label>
-        <input matInput [matDatepicker]="eventDatePicker" formControlName="eventDate" id="eventDate" type="datetime-local" />
-        <mat-datepicker-toggle matSuffix [for]="eventDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #eventDatePicker></mat-datepicker>
-      </mat-form-field>
-    </div>
+    <tickets-date-time-picker
+      fieldName="Event Date"
+      formControlName="eventDate"
+    ></tickets-date-time-picker>
 
     <div class="tickets-admin-events-modal__form-field">
       <label for="venue" class="tickets-admin-events-modal__label">Venue</label>
       <input formControlName="venue" id="venue" class="tickets-admin-events-modal__input" type="text" />
+    </div>
+
+    <div class="tickets-admin-events-modal__form-field">
+      <label for="venue" class="tickets-admin-events-modal__label">Main Category Id</label>
+      <input formControlName="mainCategoryId" id="mainCategoryId" class="tickets-admin-events-modal__input" type="text" />
     </div>
 
     <div class="tickets-admin-events-modal__form-field">
@@ -36,27 +35,15 @@
       <input formControlName="pricePerTicket" id="pricePerTicket" class="tickets-admin-events-modal__input" type="number" />
     </div>
 
-    <!-- Sales Start Date (Date and Time) -->
-    <div class="tickets-admin-events-modal__form-field">
-      <label for="salesStartDate" class="tickets-admin-events-modal__label">Sales Start Date</label>
-      <mat-form-field class="tickets-admin-events-modal__input">
-        <mat-label>Sales Start Date</mat-label>
-        <input matInput [matDatepicker]="salesStartDatePicker" formControlName="salesStartDate" id="salesStartDate" type="datetime-local" />
-        <mat-datepicker-toggle matSuffix [for]="salesStartDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #salesStartDatePicker></mat-datepicker>
-      </mat-form-field>
-    </div>
+    <tickets-date-time-picker
+      fieldName="Sales Start Date"
+      formControlName="salesStartDate"
+    ></tickets-date-time-picker>
 
-    <!-- Sales End Date (Date and Time) -->
-    <div class="tickets-admin-events-modal__form-field">
-      <label for="salesEndDate" class="tickets-admin-events-modal__label">Sales End Date</label>
-      <mat-form-field class="tickets-admin-events-modal__input">
-        <mat-label>Sales End Date</mat-label>
-        <input matInput [matDatepicker]="salesEndDatePicker" formControlName="salesEndDate" id="salesEndDate" type="datetime-local" />
-        <mat-datepicker-toggle matSuffix [for]="salesEndDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #salesEndDatePicker></mat-datepicker>
-      </mat-form-field>
-    </div>
+    <tickets-date-time-picker
+      fieldName="Sales End Date"
+      formControlName="salesEndDate"
+    ></tickets-date-time-picker>
 
     <div class="tickets-admin-events-modal__form-field">
       <label for="duration" class="tickets-admin-events-modal__label">Event Duration (minutes)</label>

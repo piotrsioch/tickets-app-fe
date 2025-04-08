@@ -46,7 +46,12 @@
               (click)="onRowClicked(element)"
               mat-cell
             >
-              {{ element[tableColumn.dataKey] }}
+              @if(tableColumn.type === 'date') {
+                {{ element[tableColumn.dataKey] | date: 'yyyy-MM-dd HH:mm' }}
+              } @else {
+                {{ element[tableColumn.dataKey] }}
+              }
+
             </td>
           </ng-container>
         }

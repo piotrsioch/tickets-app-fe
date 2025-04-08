@@ -1,27 +1,25 @@
-import {Component, inject, signal, ViewChild} from '@angular/core';
-import {ConfirmModalComponent} from '../../../shared/components/modal/confirm-modal/confirm-modal.component';
-import {ModalService, ModalStyle} from '../../../shared/services/modal.service';
-import {CustomDatasource, PageChangeEvent} from '../../../shared/components/table/table.assets';
-import {TableComponent} from '../../../shared/components/table/table.component';
-import {EventsApiService} from '../../../core/api/events';
-import {PaginationData} from '../../categories/categories.component';
-import { Event } from '../../../core/api/events'
-import {PaginationOptions} from '../../../shared/models';
-import {AdminEventsModalComponent} from './admin-events-modal/admin-events-modal.component';
+import { Component, inject, signal, ViewChild, OnInit } from '@angular/core';
+import { ConfirmModalComponent } from '../../../shared/components/modal/confirm-modal/confirm-modal.component';
+import { ModalService, ModalStyle } from '../../../shared/services/modal.service';
+import { CustomDatasource, PageChangeEvent, TableColumn } from '../../../shared/components/table/table.assets';
+import { TableComponent } from '../../../shared/components/table/table.component';
+import { EventsApiService } from '../../../core/api/events';
+import { PaginationData } from '../../categories/categories.component';
+import { Event } from '../../../core/api/events';
+import { PaginationOptions } from '../../../shared/models';
+import { AdminEventsModalComponent } from './admin-events-modal/admin-events-modal.component';
 
 @Component({
   selector: 'tickets-admin-events',
-  imports: [
-    TableComponent
-  ],
+  imports: [TableComponent],
   templateUrl: './admin-events.component.html',
-  styleUrl: './admin-events.component.scss'
+  styleUrl: './admin-events.component.scss',
 })
-export class AdminEventsComponent {
+export class AdminEventsComponent implements OnInit {
   @ViewChild(TableComponent) tableComponent!: TableComponent<Event>;
   modal = inject(ModalService);
   eventsApiService = inject(EventsApiService);
-  eventsColumns = signal([
+  eventsColumns = signal<TableColumn[]>([
     {
       name: 'Id',
       dataKey: 'id',
@@ -33,6 +31,7 @@ export class AdminEventsComponent {
     {
       name: 'Event Date',
       dataKey: 'eventDate',
+      type: 'date',
     },
     {
       name: 'Venue',

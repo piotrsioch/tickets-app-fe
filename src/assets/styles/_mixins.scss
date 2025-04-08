@@ -9,6 +9,14 @@
   }
 }
 
+@mixin form-field-style {
+  padding: variables.$main-size * 2;
+  font-size: variables.$main-size * 4;
+  border: 1px solid #ccc;
+  border-radius: variables.$main-size;
+}
+
+
 @mixin default-input($border-color: #ccc, $focus-border-color: #007bff) {
   padding: 0.5rem;
   border: 1px solid $border-color;
@@ -75,3 +83,4 @@
     max-width: 400px !important;
   }
 }
+
