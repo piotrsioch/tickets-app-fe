@@ -1,6 +1,7 @@
 export interface TableColumn {
   name: string;
   dataKey: string;
+  type?: 'date' | 'default';
 }
 
 export interface CustomDatasource<T> {
