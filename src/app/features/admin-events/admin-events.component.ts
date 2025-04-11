@@ -1,12 +1,12 @@
 import { Component, inject, signal, ViewChild, OnInit } from '@angular/core';
-import { ConfirmModalComponent } from '../../../shared/components/modal/confirm-modal/confirm-modal.component';
-import { ModalService, ModalStyle } from '../../../shared/services/modal.service';
-import { CustomDatasource, PageChangeEvent, TableColumn } from '../../../shared/components/table/table.assets';
-import { TableComponent } from '../../../shared/components/table/table.component';
-import { EventsApiService } from '../../../core/api/events';
-import { PaginationData } from '../../categories/categories.component';
-import { Event } from '../../../core/api/events';
-import { PaginationOptions } from '../../../shared/models';
+import { ConfirmModalComponent } from '../../shared/components/modal/confirm-modal/confirm-modal.component';
+import { ModalService, ModalStyle } from '../../shared/services/modal.service';
+import { CustomDatasource, PageChangeEvent, TableColumn } from '../../shared/components/table/table.assets';
+import { TableComponent } from '../../shared/components/table/table.component';
+import { EventsApiService } from '../../core/api/events';
+import { PaginationData } from '../categories/categories.component';
+import { Event } from '../../core/api/events';
+import { PaginationOptions } from '../../shared/models';
 import { AdminEventsModalComponent } from './admin-events-modal/admin-events-modal.component';
 
 @Component({

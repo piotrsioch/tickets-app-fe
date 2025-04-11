@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ToastSeverity } from '../../../../core/services/types/toast.model';
-import { CreateEvent, Event, EventsApiService } from '../../../../core/api/events';
-import { ToastService } from '../../../../core/services/toast.service';
+import { ToastSeverity } from '../../../core/services/types/toast.model';
+import { CreateEvent, Event, EventsApiService } from '../../../core/api/events';
+import { ToastService } from '../../../core/services/toast.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ModalButtonsComponent } from '../../../../shared/components/modal/modal-buttons/modal-buttons.component';
-import { ModalHeaderComponent } from '../../../../shared/components/modal/modal-header/modal-header.component';
+import { ModalButtonsComponent } from '../../../shared/components/modal/modal-buttons/modal-buttons.component';
+import { ModalHeaderComponent } from '../../../shared/components/modal/modal-header/modal-header.component';
 import { EventModalData } from './admin-events-modal.model';
-import { DateTimePickerComponent } from '../../../../shared/components/date-picker/date-time-picker.component';
+import { DateTimePickerComponent } from '../../../shared/components/date-picker/date-time-picker.component';
 
 @Component({
   selector: 'tickets-admin-events-modal',

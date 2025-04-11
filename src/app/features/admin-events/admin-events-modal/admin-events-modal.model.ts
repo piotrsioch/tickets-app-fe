@@ -1,4 +1,4 @@
-import { Event} from '../../../../core/api/events';
+import { Event } from '../../../core/api/events';
 
 export enum EventModalMode {
   EDIT = 'edit',
