@@ -1,3 +1,3 @@
-import {Event} from './event.model';
+import { EventModel } from './event.model';
 
-export type CreateEvent = Omit<Event, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt'>;
+export type CreateEvent = Omit<EventModel, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt'>;

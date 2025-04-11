@@ -1,8 +1,8 @@
-import { Event, EventsApiService } from '../../../core/api/events';
+import { EventModel, EventsApiService } from '../../../core/api/events';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { inject } from '@angular/core';
 
-export const eventDetailsResolver: ResolveFn<Event | null> = (
+export const eventDetailsResolver: ResolveFn<EventModel | null> = (
   route: ActivatedRouteSnapshot,
   _state: RouterStateSnapshot
 ) => {

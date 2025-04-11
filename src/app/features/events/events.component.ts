@@ -1,7 +1,7 @@
 import { Component, effect, inject, input, OnDestroy, signal } from '@angular/core';
 import { EventsApiService } from '../../core/api/events';
 import { PaginationOptions } from '../../shared/models';
-import { Event as EventModel } from '../../core/api/events';
+import { EventModel } from '../../core/api/events';
 import { MatColumnDef } from '@angular/material/table';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { toObservable } from '@angular/core/rxjs-interop';

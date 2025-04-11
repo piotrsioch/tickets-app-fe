@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { Event as EventModel } from '../../../core/api/events';
+import { EventModel as EventModel } from '../../../core/api/events';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 

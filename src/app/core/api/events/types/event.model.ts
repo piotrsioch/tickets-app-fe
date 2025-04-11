@@ -1,7 +1,7 @@
 import { BaseModel } from '../../../../shared/models';
 import { Category } from '../../categories';
 
-export interface Event extends BaseModel {
+export interface EventModel extends BaseModel {
   name: string;
   eventDate: Date;
   venue: string;
