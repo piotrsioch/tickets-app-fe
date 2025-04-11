@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments';
-import { RegisterUser, User } from './types';
+import { AccessToken, RegisterUser, User } from './types';
 import { catchError, firstValueFrom, of } from 'rxjs';
 
 @Injectable({
@@ -35,5 +35,14 @@ export class AuthApiService {
     );
 
     await firstValueFrom(logout$);
+  }
+
+  async refreshAccessToken(token: string): Promise<string> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    const refresh$ = this.http.post<AccessToken>(`${environment.apiRoot}/auth/refresh-access-token`, null, { headers });
+
+    const response = await firstValueFrom(refresh$);
+    return response.accessToken;
   }
 }

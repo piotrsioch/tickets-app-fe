@@ -1,7 +1,9 @@
 @if(toast()) {
-  <div class="tickets-toast__container">
+  <div
+    [ngClass]="'tickets-toast--' + toast()?.severity"
+    class="tickets-toast__container"
+  >
     <div
-      [ngClass]="'tickets-toast--' + toast()?.severity"
       class="tickets-toast__message"
     >
       {{ toast()?.text }}

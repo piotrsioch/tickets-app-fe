@@ -1,0 +1,25 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.tickets-unauthorized {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  &__link {
+    margin-top: 1rem;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
