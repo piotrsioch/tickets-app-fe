@@ -1,6 +1,8 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { AuthApiService, User, RegisterUser } from '../api/auth';
+import { AuthApiService, RegisterUser, User } from '../api/auth';
 import { TOKEN_STORAGE_KEY } from '../../shared/const';
+import { jwtDecode } from 'jwt-decode';
+import { DecodedToken } from './types/decoded-token.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +21,11 @@ export class AuthService {
       const token = this.userToken();
       if (token) {
         localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(token));
+        const decoded = this.decodeToken(token);
+
+        if (decoded) {
+          this.scheduleTokenRefresh(decoded.exp);
+        }
       }
     });
   }
@@ -40,8 +47,7 @@ export class AuthService {
   }
 
   async register(data: RegisterUser): Promise<User> {
-    const user = await this.authApiService.register(data);
-    return user;
+    return await this.authApiService.register(data);
   }
 
   async logout() {
@@ -51,6 +57,48 @@ export class AuthService {
       await this.authApiService.logout(token);
       this.#userTokenSignal.set(null);
       localStorage.removeItem(TOKEN_STORAGE_KEY);
+    }
+  }
+
+  private decodeToken(token: string): DecodedToken | null {
+    try {
+      return jwtDecode(token) as DecodedToken;
+    } catch (e) {
+      console.error('Error decoding token:', e);
+      return null;
+    }
+  }
+
+  private async refreshToken() {
+    const token = this.userToken();
+
+    if (token) {
+      try {
+        const newToken = await this.authApiService.refreshAccessToken(token);
+
+        this.#userTokenSignal.set(newToken);
+
+        localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(newToken));
+
+        console.log('Token refreshed:', newToken);
+      } catch (error) {
+        console.error('Error refreshing token:', error);
+      }
+    }
+  }
+
+  private scheduleTokenRefresh(expiryTime: number) {
+    console.log('schedule token');
+    const currentTime = Date.now() / 1000;
+    const timeToExpiry = expiryTime - currentTime;
+    const refreshTime = 60;
+
+    console.log('czas przed oswiezeniem ', timeToExpiry);
+
+    if (timeToExpiry > refreshTime) {
+      setTimeout(() => this.refreshToken(), (timeToExpiry - refreshTime) * 1000);
+    } else {
+      this.refreshToken();
     }
   }
 }
