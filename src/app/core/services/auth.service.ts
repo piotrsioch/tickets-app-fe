@@ -97,8 +97,6 @@ export class AuthService {
         this.#userTokenSignal.set(newToken);
 
         localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(newToken));
-
-        console.log('Token refreshed:', newToken);
       } catch (error) {
         console.error('Error refreshing token:', error);
       }
@@ -106,12 +104,9 @@ export class AuthService {
   }
 
   private scheduleTokenRefresh(expiryTime: number) {
-    console.log('schedule token');
     const currentTime = Date.now() / 1000;
     const timeToExpiry = expiryTime - currentTime;
     const refreshTime = 60;
-
-    console.log('czas przed oswiezeniem ', timeToExpiry);
 
     if (timeToExpiry > refreshTime) {
       setTimeout(() => this.refreshToken(), (timeToExpiry - refreshTime) * 1000);
