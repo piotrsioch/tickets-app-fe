@@ -10,6 +10,7 @@ export interface Event extends BaseModel {
   mainCategoryId: number;
   subcategoriesIds?: number[];
   description?: string;
+  imageUrl?: string;
   availableTickets: number;
   pricePerTicket: number;
   salesStartDate: Date;
