@@ -145,7 +145,6 @@ export class AdminEventsModalComponent implements OnInit {
 
   private async createEvent(event: CreateEvent): Promise<void> {
     try {
-      console.log(event);
       const newEvent = await this.eventsApiService.createEvent(event);
       this.toastService.show('Event created', ToastSeverity.SUCCESS);
       this.dialogRef.close(newEvent);
