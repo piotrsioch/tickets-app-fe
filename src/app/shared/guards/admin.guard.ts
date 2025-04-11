@@ -1,16 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-
-function decodeJWT(token: string): Record<string, unknown> | null {
-  try {
-    const payload = token.split('.')[1];
-    const decoded = atob(payload);
-    return JSON.parse(decoded);
-  } catch (_e) {
-    return null;
-  }
-}
+import { jwtDecode } from 'jwt-decode';
+import { DecodedToken } from '../../core/services/types/decoded-token.model';
 
 export const AdminGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
@@ -22,8 +14,7 @@ export const AdminGuard: CanActivateFn = () => {
     return false;
   }
 
-  const decoded = decodeJWT(token);
-  console.log(decoded);
+  const decoded: DecodedToken = jwtDecode(token);
   if (decoded?.['role'] === 'admin') {
     return true;
   }
