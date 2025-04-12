@@ -5,9 +5,10 @@ import { EventModel } from '../../core/api/events';
 import { MatColumnDef } from '@angular/material/table';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { debounceTime, Subscription } from 'rxjs';
+import { debounceTime, filter, Subscription, withLatestFrom } from 'rxjs';
 import { EventCardComponent } from './event-card/event-card.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { SocketService } from '../../core/services/tickets-socket.service';
 
 @Component({
   selector: 'tickets-events',
@@ -16,9 +17,12 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
   styleUrl: './events.component.scss',
 })
 export class EventsComponent implements OnDestroy {
-  private searchSubscription: Subscription | undefined;
+  private subscriptions = new Subscription();
 
   eventsApiService = inject(EventsApiService);
+  ticketSocketService = inject(SocketService);
+
+  updatedTicketAvailability = this.ticketSocketService.updatedTicketAvailability;
   #eventsSignal = signal<EventModel[] | null>(null);
   events = this.#eventsSignal.asReadonly();
   totalEvents = signal<number | null>(null);
@@ -33,10 +37,11 @@ export class EventsComponent implements OnDestroy {
 
   constructor() {
     const search$ = toObservable(this.searchValue);
-    this.searchSubscription = search$.pipe(debounceTime(400)).subscribe(search => {
+    const searchSub = search$.pipe(debounceTime(400)).subscribe(search => {
       const { search: _, ...rest } = this.paginationOptions();
       this.paginationOptions.set({ search, ...rest });
     });
+    this.subscriptions.add(searchSub);
 
     effect(() => {
       const paginationOptions = this.paginationOptions();
@@ -44,6 +49,27 @@ export class EventsComponent implements OnDestroy {
         this.loadEvents();
       }
     });
+
+    const ticketUpdate$ = toObservable(this.updatedTicketAvailability).pipe(
+      filter((update): update is { eventId: number; availableTickets: number } => !!update),
+      withLatestFrom(toObservable(this.events))
+    );
+
+    const ticketSub = ticketUpdate$.subscribe(([ticketUpdate, events]) => {
+      const eventId = ticketUpdate.eventId;
+      const updatedEvent = events?.find(e => e.id === eventId);
+      if (events && updatedEvent) {
+        const newEvent = {
+          ...updatedEvent,
+          availableTickets: ticketUpdate.availableTickets,
+        };
+        const filteredEvents = events.filter(e => e.id !== eventId);
+        const updatedEvents = [...filteredEvents, newEvent].sort((a, b) => a.id - b.id);
+        this.#eventsSignal.set(updatedEvents);
+      }
+    });
+
+    this.subscriptions.add(ticketSub);
   }
 
   private async loadEvents() {
@@ -61,9 +87,7 @@ export class EventsComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 
   pageChangeEvent(event: PageEvent) {
