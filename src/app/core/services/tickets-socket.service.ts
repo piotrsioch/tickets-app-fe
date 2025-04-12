@@ -6,7 +6,7 @@ import { environment } from '../../../environments';
 @Injectable({
   providedIn: 'root',
 })
-export class SocketService {
+export class TicketsSocketService {
   private socket: Socket;
 
   updatedTicketAvailability = signal<{ eventId: number; availableTickets: number } | null>(null);
@@ -18,7 +18,6 @@ export class SocketService {
     });
 
     this.socket.on('ticketAvailability', data => {
-      console.log(`Received ticket availability update: ${JSON.stringify(data)}`);
       this.updatedTicketAvailability.set(data);
     });
   }

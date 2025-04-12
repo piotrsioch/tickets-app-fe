@@ -8,7 +8,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { debounceTime, filter, Subscription, withLatestFrom } from 'rxjs';
 import { EventCardComponent } from './event-card/event-card.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { SocketService } from '../../core/services/tickets-socket.service';
+import { TicketsSocketService } from '../../core/services/tickets-socket.service';
 
 @Component({
   selector: 'tickets-events',
@@ -20,7 +20,7 @@ export class EventsComponent implements OnDestroy {
   private subscriptions = new Subscription();
 
   eventsApiService = inject(EventsApiService);
-  ticketSocketService = inject(SocketService);
+  ticketSocketService = inject(TicketsSocketService);
 
   updatedTicketAvailability = this.ticketSocketService.updatedTicketAvailability;
   #eventsSignal = signal<EventModel[] | null>(null);

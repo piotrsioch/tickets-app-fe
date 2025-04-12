@@ -2,7 +2,7 @@ import { Component, inject, signal, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventModel } from '../../../core/api/events';
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { SocketService } from '../../../core/services/tickets-socket.service';
+import { TicketsSocketService } from '../../../core/services/tickets-socket.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { filter, Subscription } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class EventDetailsComponent implements OnDestroy {
   private subscription = new Subscription();
 
   route = inject(ActivatedRoute);
-  ticketSocketService = inject(SocketService);
+  ticketSocketService = inject(TicketsSocketService);
   event = signal<EventModel | null>(null);
   updatedTicketAvailability = this.ticketSocketService.updatedTicketAvailability;
 
