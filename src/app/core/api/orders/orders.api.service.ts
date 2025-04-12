@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { withAuthHeaders } from '../../../shared/functions';
 import { environment } from '../../../../environments';
 import { firstValueFrom } from 'rxjs';
 import { CreateOrder, CreateOrderResponse, Order } from './types';
+import { SkipLoading } from '../../interceptors/loading.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,9 @@ export class OrdersApiService {
   }
 
   async createOrder(data: CreateOrder): Promise<CreateOrderResponse> {
-    const $order = this.http.post<CreateOrderResponse>(`${environment.apiRoot}/orders`, data);
+    const context = new HttpContext().set(SkipLoading, true);
+
+    const $order = this.http.post<CreateOrderResponse>(`${environment.apiRoot}/orders`, data, { context });
 
     return await firstValueFrom($order);
   }

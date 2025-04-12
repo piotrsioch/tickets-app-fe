@@ -6,7 +6,6 @@ import { LoadingService } from '../../core/services/loading.service';
 
 @Component({
   selector: 'tickets-payment',
-  imports: [],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.scss',
 })
@@ -27,24 +26,20 @@ export class PaymentComponent implements OnInit {
   }
 
   async initializeStripe() {
+    this.loadingService.loadingOn();
     this.route.queryParamMap.subscribe(params => {
       this.clientSecret = params.get('clientSecret');
       this.orderId = params.get('orderId');
     });
 
-    this.loadingService.loadingOn();
     this.#stripe = await this.stripeService.getStripe();
-    console.log('Stripe Loaded:', this.#stripe);
+
     await this.setupStripeElements();
     this.loadingService.loadingOff();
   }
 
   async setupStripeElements() {
-    console.log('in setupStripeElements');
     if (!this.#stripe || !this.clientSecret) {
-      console.log(' no stripe or client secret');
-      console.log(this.#stripe);
-      console.log(this.clientSecret);
       return;
     }
 
@@ -52,6 +47,12 @@ export class PaymentComponent implements OnInit {
 
     const paymentElement = this.#elements.create('payment');
     paymentElement.mount('#payment-element');
+
+    return new Promise<void>((resolve, _reject) => {
+      paymentElement.on('ready', () => {
+        resolve();
+      });
+    });
   }
 
   async onPayClicked() {

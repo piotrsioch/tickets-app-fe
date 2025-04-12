@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { User } from '../../core/api/users/types';
 import { CartService } from '../cart/cart.service';
+import { LoadingService } from '../../core/services/loading.service';
 
 @Component({
   selector: 'tickets-checkout',
@@ -18,6 +19,7 @@ export class CheckoutComponent {
   ordersApiService = inject(OrdersApiService);
   usersApiService = inject(UsersApiService);
   cartService = inject(CartService);
+  loadingService = inject(LoadingService);
   formBuilder = inject(FormBuilder);
   router = inject(Router);
   user = signal<User | null>(null);
@@ -40,13 +42,13 @@ export class CheckoutComponent {
 
   async onSubmit() {
     if (this.form.valid) {
-      console.log('Form data', this.form.value);
       const cartItems = this.cartItems();
       const ticketsData = cartItems.map(data => ({ eventId: data.eventId, quantity: data.quantity }));
       const orderData: CreateOrder = {
         userId: this.user()?.id,
         ticketsData: ticketsData,
       };
+      this.loadingService.loadingOn();
       const data = await this.ordersApiService.createOrder(orderData);
       this.router.navigate(['/payment'], {
         queryParams: {
