@@ -1,13 +1,15 @@
-<div class="tickets-cart__container">
-  @if(cartItems().length === 0) {
-    <p class="tickets-cart__empty">There is nothing in your cart</p>
-  } @else {
-    @for(item of cartItems(); track item.eventId) {
-      <tickets-cart-card
-        [item]="item"
-        (quantityChange)="onQuantityChange($event)"
-        (itemRemove)="onRemoveClicked($event)"
-      ></tickets-cart-card>
+@if(cartItems()) {
+  <div class="tickets-cart__container">
+    @if (cartItems().length === 0) {
+      <p class="tickets-cart__empty">There is nothing in your cart</p>
+    } @else {
+      @for (item of cartItems(); track item.eventId) {
+        <tickets-cart-card
+          [item]="item"
+          (quantityChange)="onQuantityChange($event)"
+          (itemRemove)="onRemoveClicked($event)"
+        ></tickets-cart-card>
+      }
     }
-  }
-</div>
+  </div>
+}

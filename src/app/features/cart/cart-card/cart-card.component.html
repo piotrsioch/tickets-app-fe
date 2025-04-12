@@ -13,7 +13,7 @@
         (change)="onQuantityChange($event)"
         class="tickets-cart-card__select"
       >
-        @for(n of selectableQuantities(); track n) {
+        @for (n of selectableQuantities(); track n) {
           <option [value]="n">{{ n }}</option>
         }
       </select>
