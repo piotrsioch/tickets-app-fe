@@ -1,6 +1,6 @@
-import { User } from './user.model';
+import { UserWithToken } from './user.model';
 
 export type RegisterUser = Omit<
-  User,
+  UserWithToken,
   'accessToken' | 'refreshToken' | 'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
 > & { password: string };

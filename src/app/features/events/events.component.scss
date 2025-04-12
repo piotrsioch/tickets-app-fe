@@ -22,8 +22,10 @@
     align-items: center;
   }
 
-  &__search {
-    align-self: flex-start;
+  &__filters {
+    display: flex;
+    gap: variables.$main-size * 10;
+    margin-bottom: variables.$main-size * 8;
   }
 
   &__cards {

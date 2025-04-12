@@ -29,6 +29,6 @@ export class CartComponent {
   }
 
   onContinueClicked() {
-    this.router.navigateByUrl('/checkout');
+    this.router.navigateByUrl('/cart/checkout');
   }
 }

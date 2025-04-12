@@ -1,23 +1,43 @@
 <div class="tickets-events__container">
-  <div class="tickets-events__search"
-       matColumnDef="filter"
-  >
-    <mat-form-field><mat-label>Search for concert</mat-label>
+  <div class="tickets-events__filters">
+    <div matColumnDef="filter">
+      <mat-form-field><mat-label>Search for event by name</mat-label>
         <input
-                (input)="onSearchInput($event)"
-                placeholder="filter"
-                matInput
+          (input)="onSearchInput($event)"
+          class="tickets-event__input"
+          placeholder="filter"
+          matInput
         />
-    </mat-form-field>
-  </div>
-
-  <div class="tickets-events__cards">
-    @for (event of events(); track event.id) {
-      <tickets-event-card [event]="event" />
+      </mat-form-field>
+    </div>
+    @if(mainCategories()) {
+      <div class="tickets-events__filter-item">
+        <mat-form-field appearance="fill">
+          <mat-label>Main Category</mat-label>
+          <select matNativeControl (change)="onCategorySelected($event)">
+            <option [value]="''">All categories</option>
+            @for (category of mainCategories(); track category.id) {
+              <option [value]="category.id">{{ category.name }}</option>
+            }
+          </select>
+        </mat-form-field>
+      </div>
     }
+
+    <div class="tickets-events__filter-item">
+      <mat-checkbox (change)="onAvailableOnlyChanged($event.checked)">
+        Events with available tickets only
+      </mat-checkbox>
+    </div>
   </div>
 
-  @if (totalEvents()) {
+
+  @if(totalEvents()) {
+    <div class="tickets-events__cards">
+      @for (event of events(); track event.id) {
+        <tickets-event-card [event]="event" />
+      }
+    </div>
     <mat-paginator
       #paginator
       [length]="totalEvents()"
@@ -26,5 +46,7 @@
       (page)="pageChangeEvent($event)"
       showFirstLastButtons
     ></mat-paginator>
+  } @else {
+    <p>There is no data for given filters</p>
   }
 </div>

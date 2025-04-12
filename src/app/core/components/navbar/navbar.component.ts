@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
-import { UserRole } from '../../services/types/decoded-token.model';
 import { MatIcon } from '@angular/material/icon';
+import { UserRole } from '../../api/users/types';
 
 @Component({
   selector: 'tickets-navbar',

@@ -1,0 +1,43 @@
+@use 'mixins';
+@use 'variables';
+
+.tickets-payment-success {
+  &__container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: variables.$main-size * 5;
+  }
+
+  &__message {
+    text-align: center;
+    background-color: #ffffff;
+    padding: variables.$main-size * 10;
+    border-radius: variables.$main-size * 2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: variables.$main-size * 150;
+  }
+
+  &__title {
+    font-size: variables.$main-size * 8;
+    font-weight: bold;
+    color: #28a745;
+    margin-bottom: variables.$main-size * 5;
+  }
+
+  &__text {
+    font-size: variables.$main-size * 4.2;
+    color: #333;
+    margin-bottom: variables.$main-size * 5;
+  }
+
+  &__order-history {
+    margin-top: variables.$main-size * 5;
+  }
+
+  &__button {
+    @include mixins.default-button;
+  }
+}
