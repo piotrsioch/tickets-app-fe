@@ -18,7 +18,10 @@
   }
 
   &__button {
-    @include mixins.clear-button;
+    display:block;
+    @include mixins.default-button();
     cursor: pointer;
+    margin: variables.$main-size * 10 auto 0;
+    width: variables.$main-size * 40
   }
 }

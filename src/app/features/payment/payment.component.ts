@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Stripe, StripeElements } from '@stripe/stripe-js';
 import { StripeService } from './stripe.service';
 import { LoadingService } from '../../core/services/loading.service';
+import { CartService } from '../cart/cart.service';
 
 @Component({
   selector: 'tickets-payment',
@@ -14,6 +15,7 @@ export class PaymentComponent implements OnInit {
   route = inject(ActivatedRoute);
   stripeService = inject(StripeService);
   loadingService = inject(LoadingService);
+  cartService = inject(CartService);
 
   clientSecret: string | null = null;
   orderId: string | null = null;
@@ -61,9 +63,11 @@ export class PaymentComponent implements OnInit {
     const { error } = await this.#stripe.confirmPayment({
       elements: this.#elements,
       confirmParams: {
-        return_url: window.location.origin + '/payment-success',
+        return_url: window.location.origin + '/payment/success',
       },
     });
+    console.log('payment successful');
+    this.cartService.clearCart();
 
     if (error) {
       console.error('Payment error', error.message);

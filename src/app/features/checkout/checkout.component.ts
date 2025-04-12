@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { User } from '../../core/api/users/types';
 import { CartService } from '../cart/cart.service';
 import { LoadingService } from '../../core/services/loading.service';
+import { ToastService } from '../../core/services/toast.service';
+import { ToastSeverity } from '../../core/services/types/toast.model';
 
 @Component({
   selector: 'tickets-checkout',
@@ -15,6 +17,7 @@ import { LoadingService } from '../../core/services/loading.service';
   styleUrl: './checkout.component.scss',
 })
 export class CheckoutComponent {
+  toastService = inject(ToastService);
   authService = inject(AuthService);
   ordersApiService = inject(OrdersApiService);
   usersApiService = inject(UsersApiService);
@@ -34,6 +37,7 @@ export class CheckoutComponent {
 
   constructor() {
     this.prefillUserData();
+    console.log(window.location.origin);
   }
 
   onBackClicked() {
@@ -49,13 +53,19 @@ export class CheckoutComponent {
         ticketsData: ticketsData,
       };
       this.loadingService.loadingOn();
-      const data = await this.ordersApiService.createOrder(orderData);
-      this.router.navigate(['/payment'], {
-        queryParams: {
-          clientSecret: data.clientSecret,
-          orderId: data.orderId,
-        },
-      });
+      try {
+        const data = await this.ordersApiService.createOrder(orderData);
+        this.router.navigate(['/payment'], {
+          queryParams: {
+            clientSecret: data.clientSecret,
+            orderId: data.orderId,
+          },
+        });
+      } catch (_error) {
+        await this.router.navigate(['/events']);
+        this.toastService.show('Tickets are no longer available', ToastSeverity.WARNING);
+        this.loadingService.loadingOff();
+      }
     } else {
       this.form.markAllAsTouched();
     }

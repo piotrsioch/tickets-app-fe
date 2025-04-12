@@ -1,1 +1,16 @@
-<p>payment-success works!</p>
+<div class="tickets-payment-success__container">
+  <div class="tickets-payment-success__message">
+    <h1 class="tickets-payment-success__title">Payment Successful</h1>
+    <p class="tickets-payment-success__text">
+      The confirmation email has been sent to you. Thank you for your purchase!
+    </p>
+    @if(isLoggedIn()) {
+      <div class="tickets-payment-success__order-history">
+      <p class="tickets-payment-success__text">
+       You can check your orders in your order history.
+      </p>
+      <button class="tickets-payment-success__button" (click)="goToOrderHistory()">Go to Order History</button>
+    </div>
+    }
+  </div>
+</div>

@@ -65,7 +65,7 @@ export const routes: Routes = [
     canActivate: [PaymentIntentGuard],
   },
   {
-    path: 'payment/payment-success',
+    path: 'payment/success',
     component: PaymentSuccessComponent,
   },
   {
