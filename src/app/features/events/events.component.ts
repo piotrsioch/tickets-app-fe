@@ -9,10 +9,12 @@ import { debounceTime, filter, Subscription, withLatestFrom } from 'rxjs';
 import { EventCardComponent } from './event-card/event-card.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { TicketsSocketService } from '../../core/services/tickets-socket.service';
+import { CategoriesApiService, Category } from '../../core/api/categories';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
   selector: 'tickets-events',
-  imports: [MatColumnDef, MatFormField, MatInput, MatLabel, EventCardComponent, MatPaginator],
+  imports: [MatColumnDef, MatFormField, MatInput, MatLabel, EventCardComponent, MatPaginator, MatCheckbox],
   templateUrl: './events.component.html',
   styleUrl: './events.component.scss',
 })
@@ -21,9 +23,15 @@ export class EventsComponent implements OnDestroy {
 
   eventsApiService = inject(EventsApiService);
   ticketSocketService = inject(TicketsSocketService);
+  categoriesApiService = inject(CategoriesApiService);
 
   updatedTicketAvailability = this.ticketSocketService.updatedTicketAvailability;
   #eventsSignal = signal<EventModel[] | null>(null);
+
+  mainCategories = signal<Category[]>([]);
+  selectedCategoryId = signal<number | null>(null);
+  onlyAvailable = signal<boolean>(false);
+
   events = this.#eventsSignal.asReadonly();
   totalEvents = signal<number | null>(null);
   searchValue = signal<string>('');
@@ -36,6 +44,7 @@ export class EventsComponent implements OnDestroy {
   });
 
   constructor() {
+    this.loadMainCategories();
     this.setupSearchSubscription();
     this.setupPaginationEffect();
     this.setupTicketUpdateSubscription();
@@ -54,6 +63,42 @@ export class EventsComponent implements OnDestroy {
     const { pageIndex: page, pageSize: limit } = event;
     const { page: _p, limit: _l, ...rest } = this.paginationOptions();
     this.paginationOptions.set({ page, limit, ...rest });
+  }
+
+  onCategorySelected(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    const categoryId = selectedValue ? +selectedValue : null;
+    this.selectedCategoryId.set(categoryId);
+
+    this.updatePaginationWhere();
+  }
+
+  onAvailableOnlyChanged(value: boolean) {
+    this.onlyAvailable.set(value);
+
+    this.updatePaginationWhere();
+  }
+
+  private updatePaginationWhere() {
+    const categoryId = this.selectedCategoryId();
+    const onlyAvailable = this.onlyAvailable();
+
+    const where: Record<string, unknown> = {};
+    if (categoryId !== null) {
+      where['mainCategory'] = { id: categoryId };
+    }
+    if (onlyAvailable) {
+      where['availableTickets'] = { $gt: 0 };
+    }
+
+    const current = this.paginationOptions();
+    this.paginationOptions.set({ ...current, where });
+  }
+
+  private async loadMainCategories() {
+    const mainCategories = await this.categoriesApiService.getMainCategories({ limit: 0, page: 0 });
+    mainCategories.items.sort((a, b) => a.name.localeCompare(b.name));
+    this.mainCategories.set(mainCategories.items);
   }
 
   private async loadEvents() {

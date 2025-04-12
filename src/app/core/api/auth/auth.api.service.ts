@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments';
-import { AccessToken, RegisterUser, User } from './types';
+import { AccessToken, RegisterUser, UserWithToken } from './types';
 import { catchError, firstValueFrom, of } from 'rxjs';
 
 @Injectable({
@@ -10,14 +10,14 @@ import { catchError, firstValueFrom, of } from 'rxjs';
 export class AuthApiService {
   http = inject(HttpClient);
 
-  async login(email: string, password: string): Promise<User> {
-    const login$ = this.http.post<User>(`${environment.apiRoot}/auth/login`, { email, password });
+  async login(email: string, password: string): Promise<UserWithToken> {
+    const login$ = this.http.post<UserWithToken>(`${environment.apiRoot}/auth/login`, { email, password });
 
     return await firstValueFrom(login$);
   }
 
-  async register(data: RegisterUser): Promise<User> {
-    const register$ = this.http.post<User>(`${environment.apiRoot}/auth/register`, data);
+  async register(data: RegisterUser): Promise<UserWithToken> {
+    const register$ = this.http.post<UserWithToken>(`${environment.apiRoot}/auth/register`, data);
 
     return await firstValueFrom(register$);
   }

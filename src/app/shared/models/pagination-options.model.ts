@@ -5,4 +5,5 @@ export interface PaginationOptions {
   orderDirection?: 'ASC' | 'DESC';
   search?: string;
   searchFields?: string[];
+  where?: Record<string, unknown>;
 }

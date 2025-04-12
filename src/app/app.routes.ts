@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
 import { RegisterComponent } from './features/register/register.component';
-import { HomeComponent } from './features/home/home.component';
 import { CategoriesComponent } from './features/categories/categories.component';
 import { AdminEventsComponent } from './features/admin-events/admin-events.component';
 import { LoggedInGuard } from './shared/guards/logged-in.guard';
@@ -11,15 +10,16 @@ import { EventsComponent } from './features/events/events.component';
 import { EventDetailsComponent } from './features/events/event-details/event-details.component';
 import { eventDetailsResolver } from './features/events/event-details/event-details.resolver';
 import { CartComponent } from './features/cart/cart.component';
+import { CartNotEmptyGuard } from './shared/guards/cart-not-empty.guard';
+import { CheckoutComponent } from './features/checkout/checkout.component';
+import { PaymentComponent } from './features/payment/payment.component';
+import { PaymentIntentGuard } from './shared/guards/payment-intent.guard';
+import { PaymentSuccessComponent } from './features/payment/payment-success/payment-success.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-  },
-  {
-    path: 'home',
-    component: HomeComponent,
+    component: EventsComponent,
   },
   {
     path: 'login',
@@ -53,6 +53,20 @@ export const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+  },
+  {
+    path: 'cart/checkout',
+    component: CheckoutComponent,
+    canActivate: [CartNotEmptyGuard],
+  },
+  {
+    path: 'payment',
+    component: PaymentComponent,
+    canActivate: [PaymentIntentGuard],
+  },
+  {
+    path: 'payment/success',
+    component: PaymentSuccessComponent,
   },
   {
     path: 'unauthorized',
