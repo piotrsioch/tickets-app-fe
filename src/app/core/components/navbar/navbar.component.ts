@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { UserRole } from '../../services/types/decoded-token.model';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'tickets-navbar',
-  imports: [RouterLink],
+  imports: [RouterLink, MatIcon],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })

@@ -1,13 +1,22 @@
-@use "mixins";
+@use 'mixins';
 
 @include mixins.modal-styles;
 
-html, body { height: 100%; box-sizing: border-box !important; }
+html,
+body {
+  height: 100%;
+  box-sizing: border-box !important;
+}
 html {
   box-sizing: border-box;
 }
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

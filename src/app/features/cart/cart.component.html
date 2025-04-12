@@ -1,0 +1,28 @@
+@if(cartItems()) {
+  <div class="tickets-cart__container">
+    <div class="tickets-cart__cards">
+      @if (cartItems().length === 0) {
+        <p class="tickets-cart__empty">There is nothing in your cart</p>
+      } @else {
+        @for (item of cartItems(); track item.eventId) {
+          <tickets-cart-card
+            [item]="item"
+            (quantityChange)="onQuantityChange($event)"
+            (itemRemove)="onRemoveClicked($event)"
+          ></tickets-cart-card>
+        }
+      }
+    </div>
+    @if(cartItems().length > 0) {
+      <div class="tickets-cart__info">
+        <p class="tickets-cart__info__text">Total price: {{ totalPrice() | currency }}</p>
+        <button
+          (click)="onContinueClicked()"
+          class="tickets-cart__continue-button"
+        >
+          Continue to Checkout
+        </button>
+      </div>
+    }
+  </div>
+}

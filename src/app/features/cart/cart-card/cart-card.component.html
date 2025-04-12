@@ -1,0 +1,37 @@
+@if(item()) {
+  <div class="tickets-cart-card__container">
+    <div class="tickets-cart-card__info">
+      <h3 class="tickets-cart-card__title">{{ item()?.eventName }}</h3>
+      <p class="tickets-cart-card__price">Price: {{ item()?.pricePerTicket | currency }}</p>
+      <p class="tickets-cart-card__availability">Availability: {{ item()?.availableTickets }}</p>
+    </div>
+
+    <div class="tickets-cart-card__actions">
+      <label class="tickets-cart-card__label">
+        Quantity:
+        <select
+          #select
+          [value]="item()?.quantity"
+          (change)="onQuantityChange($event)"
+          class="tickets-cart-card__select"
+        >
+          @for (n of selectableQuantities(); track n) {
+            <option [value]="n">{{ n }}</option>
+          }
+        </select>
+      </label>
+
+      <button
+        (click)="onRemoveClicked()"
+        class="tickets-cart-card__remove"
+        aria-label="Delete from cart"
+        mat-icon-button
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <p class="tickets-cart-card__total">Total: {{ totalPrice() | currency }}</p>
+  </div>
+}
+
