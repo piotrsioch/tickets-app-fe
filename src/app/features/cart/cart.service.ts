@@ -2,6 +2,8 @@ import { computed, inject, Injectable, OnDestroy, signal } from '@angular/core';
 import { TicketsSocketService } from '../../core/services/tickets-socket.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { filter, Subscription, withLatestFrom } from 'rxjs';
+import { ToastService } from '../../core/services/toast.service';
+import { ToastSeverity } from '../../core/services/types/toast.model';
 
 export interface CartItem {
   eventId: number;
@@ -21,6 +23,7 @@ export class CartService implements OnDestroy {
   items = this.#itemsSignal.asReadonly();
   totalQuantity = computed(() => this.#itemsSignal().reduce((total, item) => total + item.quantity, 0));
   ticketsSocketService = inject(TicketsSocketService);
+  toastService = inject(ToastService);
   updatedTicketAvailability = this.ticketsSocketService.updatedTicketAvailability;
 
   constructor() {
@@ -70,9 +73,7 @@ export class CartService implements OnDestroy {
   }
 
   private saveCart() {
-    console.log('saving to cart');
     const items = this.#itemsSignal();
-    console.log(items);
     localStorage.setItem(this.#storageKey, JSON.stringify(items));
   }
 
@@ -100,6 +101,23 @@ export class CartService implements OnDestroy {
 
     const ticketSub = ticketUpdate$.subscribe(([ticketUpdate, cartItems]) => {
       const { eventId, availableTickets } = ticketUpdate;
+
+      const itemInCart = cartItems.find(item => item.eventId === eventId);
+
+      if (!itemInCart) {
+        return;
+      }
+
+      if (availableTickets === 0) {
+        this.removeFromCart(eventId);
+
+        this.toastService.show(
+          `Sorry, tickets for event ${itemInCart.eventName} have sold out!`,
+          ToastSeverity.WARNING
+        );
+        return;
+      }
+
       const updatedItems = cartItems.map(item => {
         if (item.eventId === eventId) {
           return { ...item, availableTickets };
