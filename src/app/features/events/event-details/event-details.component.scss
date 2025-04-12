@@ -1,4 +1,5 @@
 @use 'variables';
+@use 'mixins';
 
 .event-details {
   &__container {
@@ -62,5 +63,9 @@
     font-weight: 600;
     color: #333;
     margin-right: 1 * variables.$main-size;
+  }
+
+  &__button {
+    @include mixins.default-button();
   }
 }

@@ -1,0 +1,12 @@
+<div class="tickets-add-to-card-modal__container">
+  <tickets-modal-header
+    (closeClicked)="close()"
+    title="Item added to cart"
+  ></tickets-modal-header>
+  <tickets-modal-buttons
+    (savedClicked)="onSave($event)"
+    saveText="Go to cart"
+    closeText="Continue shopping"
+    class="tickets-add-to-card-modal__buttons"
+  ></tickets-modal-buttons>
+</div>

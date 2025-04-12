@@ -10,6 +10,7 @@ import { UnauthorizedComponent } from './features/unauthorized/unauthorized.comp
 import { EventsComponent } from './features/events/events.component';
 import { EventDetailsComponent } from './features/events/event-details/event-details.component';
 import { eventDetailsResolver } from './features/events/event-details/event-details.resolver';
+import { CartComponent } from './features/cart/cart.component';
 
 export const routes: Routes = [
   {
@@ -48,6 +49,10 @@ export const routes: Routes = [
     resolve: {
       event: eventDetailsResolver,
     },
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
   },
   {
     path: 'unauthorized',

@@ -1,0 +1,113 @@
+@use 'variables';
+
+.tickets-cart-card {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 6 * variables.$main-size;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4 * variables.$main-size;
+  }
+
+  &__title {
+    font-size: 5 * variables.$main-size;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 2 * variables.$main-size;
+  }
+
+  &__price {
+    font-size: 4 * variables.$main-size;
+    color: #666;
+  }
+
+  &__availability {
+    font-size: 3.5 * variables.$main-size;
+    color: #999;
+    margin-top: variables.$main-size;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__label {
+    font-size: 3.5 * variables.$main-size;
+    color: #333;
+  }
+
+  &__select {
+    padding: 1.5 * variables.$main-size;
+    font-size: 4 * variables.$main-size;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    margin-left: 8px;
+  }
+
+  &__remove {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    color: #ff6347;
+    font-size: 6 * variables.$main-size;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      color: #ff4500;
+    }
+  }
+
+  &__total {
+    font-size: 4.5 * variables.$main-size;
+    font-weight: bold;
+    color: #333;
+    margin-top: 16px;
+  }
+
+  &__actions .mat-icon {
+    font-size: 6 * variables.$main-size;
+    color: #ff6347;
+  }
+
+  @media (max-width: 768px) {
+    &__container {
+      padding: 3 * variables.$main-size;
+    }
+
+    &__title {
+      font-size: 4.5 * variables.$main-size;
+    }
+
+    &__price,
+    &__availability {
+      font-size: 3.5 * variables.$main-size;
+    }
+
+    &__remove {
+      font-size: 5 * variables.$main-size;
+    }
+
+    &__total {
+      font-size: 4 * variables.$main-size;
+    }
+  }
+}
