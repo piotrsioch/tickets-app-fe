@@ -24,18 +24,10 @@ export class CartService implements OnDestroy {
   totalQuantity = computed(() => this.#itemsSignal().reduce((total, item) => total + item.quantity, 0));
   ticketsSocketService = inject(TicketsSocketService);
   toastService = inject(ToastService);
-  updatedTicketAvailability = this.ticketsSocketService.updatedTicketAvailability;
 
   constructor() {
     this.loadCart();
     this.setupTicketUpdateSubscription();
-  }
-
-  updateAvailableTickets(eventId: number, availableTickets: number) {
-    const updatedItems = this.#itemsSignal().map(item =>
-      item.eventId === eventId ? { ...item, availableTickets } : item
-    );
-    this.#itemsSignal.set(updatedItems);
   }
 
   addToCart(item: Omit<CartItem, 'quantity'>, quantity = 1) {
@@ -51,12 +43,19 @@ export class CartService implements OnDestroy {
   }
 
   updateQuantity(eventId: number, quantity: number) {
+    const items = this.#itemsSignal();
     if (quantity <= 0) {
       this.removeFromCart(eventId);
       return;
     }
 
-    const updated = this.#itemsSignal().map(item => (item.eventId === eventId ? { ...item, quantity } : item));
+    const itemInCart = items.find(cartItem => cartItem.eventId === eventId);
+
+    if (itemInCart && itemInCart.availableTickets < quantity) {
+      return;
+    }
+
+    const updated = items.map(item => (item.eventId === eventId ? { ...item, quantity } : item));
     this.#itemsSignal.set(updated);
     this.saveCart();
   }

@@ -10,6 +10,7 @@
       <label class="tickets-cart-card__label">
         Quantity:
         <select
+          #select
           [value]="item()?.quantity"
           (change)="onQuantityChange($event)"
           class="tickets-cart-card__select"

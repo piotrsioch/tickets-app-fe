@@ -1,4 +1,4 @@
-import { Component, input, output, signal, effect } from '@angular/core';
+import { Component, input, output, signal, effect, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CartItem } from '../cart.service';
 import { QuantityChangeData } from '../cart.types';
 import { MatIconButton } from '@angular/material/button';
@@ -11,7 +11,8 @@ import { MatIcon } from '@angular/material/icon';
   templateUrl: './cart-card.component.html',
   styleUrl: './cart-card.component.scss',
 })
-export class CartCardComponent {
+export class CartCardComponent implements AfterViewInit {
+  @ViewChild('select') selectElement: ElementRef<HTMLSelectElement> | undefined;
   item = input<CartItem | undefined>();
   selectableQuantities = signal<number[]>([]);
   quantityChange = output<QuantityChangeData>();
@@ -30,6 +31,12 @@ export class CartCardComponent {
         this.totalPrice.set(currentItem.pricePerTicket * currentItem.quantity);
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.item() && this.selectElement) {
+      this.selectElement.nativeElement.value = this.item()!.quantity.toString();
+    }
   }
 
   setSelectableQuantities(availableTickets: number): void {
