@@ -10,8 +10,10 @@ import { EventsComponent } from './features/events/events.component';
 import { EventDetailsComponent } from './features/events/event-details/event-details.component';
 import { eventDetailsResolver } from './features/events/event-details/event-details.resolver';
 import { CartComponent } from './features/cart/cart.component';
-import { CartNotEmptyGuard } from './shared/guards/car-not-empty.guard';
+import { CartNotEmptyGuard } from './shared/guards/cart-not-empty.guard';
 import { CheckoutComponent } from './features/checkout/checkout.component';
+import { PaymentComponent } from './features/payment/payment.component';
+import { PaymentIntentGuard } from './shared/guards/payment-intent.guard';
 
 export const routes: Routes = [
   {
@@ -55,6 +57,11 @@ export const routes: Routes = [
     path: 'cart/checkout',
     component: CheckoutComponent,
     canActivate: [CartNotEmptyGuard],
+  },
+  {
+    path: 'payment',
+    component: PaymentComponent,
+    canActivate: [PaymentIntentGuard],
   },
   {
     path: 'unauthorized',

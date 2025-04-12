@@ -48,7 +48,12 @@ export class CheckoutComponent {
         ticketsData: ticketsData,
       };
       const data = await this.ordersApiService.createOrder(orderData);
-      console.log(data);
+      this.router.navigate(['/payment'], {
+        queryParams: {
+          clientSecret: data.clientSecret,
+          orderId: data.orderId,
+        },
+      });
     } else {
       this.form.markAllAsTouched();
     }
