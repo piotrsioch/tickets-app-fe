@@ -1,0 +1,39 @@
+<div
+  (click)="navigateToDetails()"
+  class="tickets-event-card__container"
+>
+  <div class="tickets-event-card__header">
+    <h2 class="tickets-event-card__title">{{ event().name }}</h2>
+    <p class="tickets-event-card__date">{{ event().eventDate | date: "dd MMM, yyyy 'at' HH:mm" }}</p>
+  </div>
+
+  <div class="tickets-event-card__details">
+    <p class="tickets-event-card__venue">
+      <span class="tickets-event-card__label">Venue:</span> {{ event().venue }}
+    </p>
+
+    <div class="tickets-event-card__category">
+      <p class="tickets-event-card__category-name">
+        <span class="tickets-event-card__label">Category:</span> {{ event().mainCategory!.name }}
+      </p>
+      <p class="tickets-event-card__category-description">
+        {{ event().mainCategory!.description }}
+      </p>
+    </div>
+  </div>
+
+  <div class="tickets-event-card__footer">
+    <p class="tickets-event-card__tickets">
+      <span class="tickets-event-card__label">Tickets Available:</span> {{ event().availableTickets }}
+    </p>
+    <p class="tickets-event-card__price">
+      <span class="tickets-event-card__label">Price per Ticket:</span> {{ event().pricePerTicket | currency }}
+    </p>
+    <button
+      (click)="navigateToDetails()"
+      class="tickets-event-card__button"
+    >
+      Details
+    </button>
+  </div>
+</div>

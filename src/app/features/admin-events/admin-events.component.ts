@@ -1,12 +1,12 @@
 import { Component, inject, signal, ViewChild, OnInit } from '@angular/core';
-import { ConfirmModalComponent } from '../../../shared/components/modal/confirm-modal/confirm-modal.component';
-import { ModalService, ModalStyle } from '../../../shared/services/modal.service';
-import { CustomDatasource, PageChangeEvent, TableColumn } from '../../../shared/components/table/table.assets';
-import { TableComponent } from '../../../shared/components/table/table.component';
-import { EventsApiService } from '../../../core/api/events';
-import { PaginationData } from '../../categories/categories.component';
-import { Event } from '../../../core/api/events';
-import { PaginationOptions } from '../../../shared/models';
+import { ConfirmModalComponent } from '../../shared/components/modal/confirm-modal/confirm-modal.component';
+import { ModalService, ModalStyle } from '../../shared/services/modal.service';
+import { CustomDatasource, PageChangeEvent, TableColumn } from '../../shared/components/table/table.assets';
+import { TableComponent } from '../../shared/components/table/table.component';
+import { EventsApiService } from '../../core/api/events';
+import { PaginationData } from '../categories/categories.component';
+import { EventModel } from '../../core/api/events';
+import { PaginationOptions } from '../../shared/models';
 import { AdminEventsModalComponent } from './admin-events-modal/admin-events-modal.component';
 
 @Component({
@@ -16,7 +16,7 @@ import { AdminEventsModalComponent } from './admin-events-modal/admin-events-mod
   styleUrl: './admin-events.component.scss',
 })
 export class AdminEventsComponent implements OnInit {
-  @ViewChild(TableComponent) tableComponent!: TableComponent<Event>;
+  @ViewChild(TableComponent) tableComponent!: TableComponent<EventModel>;
   modal = inject(ModalService);
   eventsApiService = inject(EventsApiService);
   eventsColumns = signal<TableColumn[]>([
@@ -42,7 +42,7 @@ export class AdminEventsComponent implements OnInit {
       dataKey: 'availableTickets',
     },
   ]);
-  events = signal<CustomDatasource<Event> | null>(null);
+  events = signal<CustomDatasource<EventModel> | null>(null);
   search = signal<string>('');
   currentPaginationData = signal<PaginationData>({ page: 0, limit: 10 });
 
@@ -64,7 +64,7 @@ export class AdminEventsComponent implements OnInit {
     await this.loadEvents({ page, limit, search });
   }
 
-  async onEditClicked(event: Event): Promise<void> {
+  async onEditClicked(event: EventModel): Promise<void> {
     const updatedEvent = await this.modal.open(AdminEventsModalComponent, {
       data: { event, mode: 'edit' },
     });
@@ -79,7 +79,7 @@ export class AdminEventsComponent implements OnInit {
     this.events.set({ data: newEvents, total: events!.total });
   }
 
-  async onDeleteClicked(event: Event) {
+  async onDeleteClicked(event: EventModel) {
     const wasDeleted = await this.modal.open(ConfirmModalComponent, { style: ModalStyle.ConfirmModal });
 
     if (!wasDeleted) {
@@ -123,7 +123,7 @@ export class AdminEventsComponent implements OnInit {
       : { page: 0, limit: 10 };
 
     const events = await this.eventsApiService.getAllEvents(optionsWithSearch);
-    const mappedEvents: CustomDatasource<Event> = {
+    const mappedEvents: CustomDatasource<EventModel> = {
       data: events.items,
       total: events.total,
     };

@@ -6,17 +6,32 @@
     Home
   </a>
   <a
-    routerLink="/categories"
+    routerLink="/events"
     class="tickets-navbar__item"
   >
-    Categories
+    Events
   </a>
-  <a
-    routerLink="/admin-events"
-    class="tickets-navbar__item"
-  >
-    Admin Events
-  </a>
+  @if(userRole() === UserRole.ADMIN) {
+    <a
+      routerLink="/categories"
+      class="tickets-navbar__item"
+    >
+      Categories
+    </a>
+    <a
+      routerLink="/admin-events"
+      class="tickets-navbar__item"
+    >
+      Admin Events
+    </a>
+  } @else if(userRole() === UserRole.USER) {
+    <a
+      routerLink="/history"
+      class="tickets-navbar__item">
+      History
+    </a>
+  }
+
   @if(!isLoggedIn()) {
     <a
       routerLink="/login"

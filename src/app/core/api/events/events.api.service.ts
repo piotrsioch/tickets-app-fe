@@ -4,7 +4,7 @@ import { environment } from '../../../../environments';
 import { PaginationOptions, PaginationOutput } from '../../../shared/models';
 import { buildPaginationParams, withAuthHeaders } from '../../../shared/functions';
 import { firstValueFrom } from 'rxjs';
-import { Event, CreateEvent } from './types';
+import { EventModel, CreateEvent } from './types';
 import { AuthService } from '../../services/auth.service';
 
 @Injectable({
@@ -14,29 +14,29 @@ export class EventsApiService {
   http = inject(HttpClient);
   authService = inject(AuthService);
 
-  async createEvent(data: CreateEvent): Promise<Event> {
+  async createEvent(data: CreateEvent): Promise<EventModel> {
     const headers = withAuthHeaders(this.authService);
-    const event$ = this.http.post<Event>(`${environment.apiRoot}/events`, data, { ...headers });
+    const event$ = this.http.post<EventModel>(`${environment.apiRoot}/events`, data, { ...headers });
 
     return await firstValueFrom(event$);
   }
 
-  async getAllEvents(options: PaginationOptions): Promise<PaginationOutput<Event>> {
+  async getAllEvents(options: PaginationOptions): Promise<PaginationOutput<EventModel>> {
     const params = buildPaginationParams(options);
-    const events$ = this.http.get<PaginationOutput<Event>>(`${environment.apiRoot}/events`, { params });
+    const events$ = this.http.get<PaginationOutput<EventModel>>(`${environment.apiRoot}/events`, { params });
 
     return await firstValueFrom(events$);
   }
 
-  async getEventById(id: number): Promise<Event> {
-    const event$ = this.http.get<Event>(`${environment.apiRoot}/events/${id}`);
+  async getEventById(id: number): Promise<EventModel> {
+    const event$ = this.http.get<EventModel>(`${environment.apiRoot}/events/${id}`);
 
     return await firstValueFrom(event$);
   }
 
-  async updateEvent(id: number, data: Partial<Event>): Promise<Event> {
+  async updateEvent(id: number, data: Partial<EventModel>): Promise<EventModel> {
     const headers = withAuthHeaders(this.authService);
-    const event$ = this.http.put<Event>(`${environment.apiRoot}/events/${id}`, data, { ...headers });
+    const event$ = this.http.put<EventModel>(`${environment.apiRoot}/events/${id}`, data, { ...headers });
 
     return await firstValueFrom(event$);
   }

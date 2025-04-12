@@ -1,0 +1,36 @@
+@use 'variables';
+
+:host ::ng-deep {
+  .mat-mdc-paginator {
+    display: flex !important;
+    justify-content: center;
+    background: inherit !important;
+  }
+
+  ::ng-deep {
+    .mat-mdc-form-field-subscript-wrapper, .mdc-line-ripple {
+      display: none;
+    }
+  }
+}
+
+.tickets-events {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__search {
+    align-self: flex-start;
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: variables.$main-size * 10
+  }
+}

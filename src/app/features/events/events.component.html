@@ -1,0 +1,33 @@
+<div class="tickets-events__container">
+  <div
+    class="tickets-events__search"
+    matColumnDef="filter"
+  >
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input
+        (input)="onSearchInput($event)"
+
+        placeholder="filter"
+        matInput
+      ></mat-form-field>
+  </div>
+
+  <div class="tickets-events__cards">
+    @for(event of events(); track event.id) {
+      <tickets-event-card [event]="event" />
+    }
+  </div>
+
+
+  @if( totalEvents()) {
+    <mat-paginator
+      #paginator
+      [length]="totalEvents()"
+      [pageSizeOptions]="paginationSizes()"
+      [pageSize]="defaultPageSize()"
+      (page)="pageChangeEvent($event)"
+      showFirstLastButtons
+    ></mat-paginator>
+  }
+</div>

@@ -3,10 +3,13 @@ import { LoginComponent } from './features/login/login.component';
 import { RegisterComponent } from './features/register/register.component';
 import { HomeComponent } from './features/home/home.component';
 import { CategoriesComponent } from './features/categories/categories.component';
-import { AdminEventsComponent } from './features/events/admin-events/admin-events.component';
+import { AdminEventsComponent } from './features/admin-events/admin-events.component';
 import { LoggedInGuard } from './shared/guards/logged-in.guard';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { UnauthorizedComponent } from './features/unauthorized/unauthorized.component';
+import { EventsComponent } from './features/events/events.component';
+import { EventDetailsComponent } from './features/events/event-details/event-details.component';
+import { eventDetailsResolver } from './features/events/event-details/event-details.resolver';
 
 export const routes: Routes = [
   {
@@ -34,6 +37,17 @@ export const routes: Routes = [
     path: 'admin-events',
     component: AdminEventsComponent,
     canActivate: [LoggedInGuard, AdminGuard],
+  },
+  {
+    path: 'events',
+    component: EventsComponent,
+  },
+  {
+    path: 'events/:eventId',
+    component: EventDetailsComponent,
+    resolve: {
+      event: eventDetailsResolver,
+    },
   },
   {
     path: 'unauthorized',

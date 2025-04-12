@@ -1,0 +1,39 @@
+@if(event()) {
+  <div class="event-details__container">
+    <img
+      [src]="event()?.imageUrl || 'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?cs=srgb&dl=pexels-sebastian-ervi-866902-1763075.jpg&fm=jpg'"
+      class="event-details__image"
+      alt="{{ event()?.name }}"
+    />
+
+    <div class="event-details__content">
+      <h1 class="event-details__title">{{ event()?.name }}</h1>
+      <p class="event-details__date">{{ event()?.eventDate | date: 'dd MMMM yyyy, HH:mm' }}</p>
+      <p class="event-details__venue">
+        <span class="event-details__label">Venue:</span> {{ event()?.venue }}
+      </p>
+
+      <p class="event-details__category">
+        <span class="event-details__label">Category:</span> {{ event()?.mainCategory?.name }}
+      </p>
+
+      <p class="event-details__description">
+        {{ event()?.description || 'No description provided for this event.' }}
+      </p>
+
+      <div class="event-details__info">
+        <p>
+          <span class="event-details__label">Available Tickets:</span> {{ event()?.availableTickets }}
+        </p>
+        <p>
+          <span class="event-details__label">Price:</span> {{ event()?.pricePerTicket | currency }}
+        </p>
+        <p>
+          <span class="event-details__label">Duration:</span> {{ event()?.duration }} minutes
+        </p>
+      </div>
+    </div>
+  </div>
+} @else {
+  <p>No event found</p>
+}
