@@ -1,5 +1,5 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { AuthApiService, RegisterUser, User } from '../api/auth';
+import { AuthApiService, RegisterUser, UserWithToken } from '../api/auth';
 import { REFRESH_TOKEN_STORAGE_KEY, TOKEN_STORAGE_KEY } from '../../shared/const';
 import { jwtDecode } from 'jwt-decode';
 import { DecodedToken } from './types/decoded-token.model';
@@ -56,7 +56,7 @@ export class AuthService {
     this.#userRoleSignal.set(null);
   }
 
-  async login(email: string, password: string): Promise<User> {
+  async login(email: string, password: string): Promise<UserWithToken> {
     const user = await this.authApiService.login(email, password);
 
     this.#userTokenSignal.set(user.accessToken);
@@ -65,7 +65,7 @@ export class AuthService {
     return user;
   }
 
-  async register(data: RegisterUser): Promise<User> {
+  async register(data: RegisterUser): Promise<UserWithToken> {
     return await this.authApiService.register(data);
   }
 

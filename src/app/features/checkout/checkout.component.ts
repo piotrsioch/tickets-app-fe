@@ -1,9 +1,73 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { CreateOrder, OrdersApiService } from '../../core/api/orders';
+import { UsersApiService } from '../../core/api/users/users.api.service';
+import { AuthService } from '../../core/services/auth.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { User } from '../../core/api/users/types';
+import { CartService } from '../cart/cart.service';
 
 @Component({
   selector: 'tickets-checkout',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
 })
-export class CheckoutComponent {}
+export class CheckoutComponent {
+  authService = inject(AuthService);
+  ordersApiService = inject(OrdersApiService);
+  usersApiService = inject(UsersApiService);
+  cartService = inject(CartService);
+  formBuilder = inject(FormBuilder);
+  router = inject(Router);
+  user = signal<User | null>(null);
+  cartItems = this.cartService.items;
+
+  form: FormGroup = this.formBuilder.group({
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    phone: [''],
+  });
+
+  constructor() {
+    this.prefillUserData();
+  }
+
+  onBackClicked() {
+    this.router.navigateByUrl('cart');
+  }
+
+  async onSubmit() {
+    if (this.form.valid) {
+      console.log('Form data', this.form.value);
+      const cartItems = this.cartItems();
+      const ticketsData = cartItems.map(data => ({ eventId: data.eventId, quantity: data.quantity }));
+      const orderData: CreateOrder = {
+        userId: this.user()?.id,
+        ticketsData: ticketsData,
+      };
+      const data = await this.ordersApiService.createOrder(orderData);
+      console.log(data);
+    } else {
+      this.form.markAllAsTouched();
+    }
+  }
+
+  private async prefillUserData() {
+    if (this.authService.isLoggedIn()) {
+      try {
+        const user = await this.usersApiService.getUserData();
+        this.user.set(user);
+        this.form.patchValue({
+          firstName: user.firstName || '',
+          lastName: user.lastName || '',
+          email: user.email || '',
+          phone: user.phoneNumber || '',
+        });
+      } catch (_) {
+        console.error('Error druing fetching user data', _);
+      }
+    }
+  }
+}

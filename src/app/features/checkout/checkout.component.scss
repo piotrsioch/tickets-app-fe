@@ -1,0 +1,67 @@
+@use 'variables';
+@use 'mixins';
+
+.tickets-checkout {
+  &__container {
+    padding: variables.$main-size * 4;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$main-size * 3;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$main-size;
+    @include mixins.form-field-style;
+  }
+
+  &__input {
+    @include mixins.default-input;
+  }
+
+  &__buttons {
+    margin-top: variables.$main-size * 10;
+    display: flex;
+    gap: variables.$main-size * 50;
+  }
+
+  &__back-button {
+    @include mixins.default-button;
+    font-weight: bold;
+    padding: variables.$main-size * 2;
+    flex: 1;
+    width: 50%;
+    height: variables.$main-size * 10;
+  }
+
+  &__submit-button {
+    @include mixins.default-button;
+    font-weight: bold;
+    padding: variables.$main-size * 2;
+    flex: 1;
+  }
+}
+
+.tickets-checkout__form {
+
+}
+
+.tickets-checkout__field {
+
+}
+
+.tickets-checkout__input {
+  @include mixins.default-input;
+}
+
+.tickets-checkout__submit-button {
+  @include mixins.default-button;
+  font-weight: bold;
+  padding: variables.$main-size * 2;
+}

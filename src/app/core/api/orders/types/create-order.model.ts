@@ -7,3 +7,8 @@ export interface CreateOrder {
   userId?: string;
   ticketsData: TicketData[];
 }
+
+export interface CreateOrderResponse {
+  orderId: string;
+  clientSecret: string;
+}

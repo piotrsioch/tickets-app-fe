@@ -1,6 +1,6 @@
 import { BaseModel } from '../../../../shared/models';
 
-export interface User extends BaseModel {
+export interface UserWithToken extends BaseModel {
   accessToken: string;
   email: string;
   firstName: string;

@@ -5,12 +5,12 @@ import { User } from '../users/types';
 import { withAuthHeaders } from '../../../shared/functions';
 import { environment } from '../../../../environments';
 import { firstValueFrom } from 'rxjs';
-import { CreateOrder, Order } from './types';
+import { CreateOrder, CreateOrderResponse } from './types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UsersApiService {
+export class OrdersApiService {
   http = inject(HttpClient);
   authService = inject(AuthService);
 
@@ -21,8 +21,8 @@ export class UsersApiService {
     return await firstValueFrom(user$);
   }
 
-  async createOrder(data: CreateOrder): Promise<Order> {
-    const $order = this.http.post<Order>(`${environment.apiRoot}/orders`, data);
+  async createOrder(data: CreateOrder): Promise<CreateOrderResponse> {
+    const $order = this.http.post<CreateOrderResponse>(`${environment.apiRoot}/orders`, data);
 
     return await firstValueFrom($order);
   }

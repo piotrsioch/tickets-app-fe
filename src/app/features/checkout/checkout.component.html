@@ -1,1 +1,38 @@
-<p>checkout works!</p>
+<div class="tickets-checkout__container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="tickets-checkout__form">
+    <div class="tickets-checkout__field">
+      <label for="firstName" class="tickets-checkout__label">First Name</label>
+      <input id="firstName" type="text" formControlName="firstName" class="tickets-checkout__input" />
+    </div>
+
+    <div class="tickets-checkout__field">
+      <label for="lastName" class="tickets-checkout__label">Last Name</label>
+      <input id="lastName" type="text" formControlName="lastName" class="tickets-checkout__input" />
+    </div>
+
+    <div class="tickets-checkout__field">
+      <label for="email" class="tickets-checkout__label">Email</label>
+      <input id="email" type="email" formControlName="email" class="tickets-checkout__input" />
+    </div>
+
+    <div class="tickets-checkout__field">
+      <label for="phone" class="tickets-checkout__label">Phone (optional)</label>
+      <input id="phone" type="tel" formControlName="phone" class="tickets-checkout__input" />
+    </div>
+
+    <div class="tickets-checkout__buttons">
+      <button
+        (click)="onBackClicked()"
+        class="tickets-checkout__back-button"
+      >
+        Back
+      </button>
+      <button
+        type="submit"
+        class="tickets-checkout__submit-button"
+      >
+        Buy
+      </button>
+    </div>
+  </form>
+</div>
