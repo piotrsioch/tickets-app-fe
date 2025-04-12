@@ -47,21 +47,3 @@
     flex: 1;
   }
 }
-
-.tickets-checkout__form {
-
-}
-
-.tickets-checkout__field {
-
-}
-
-.tickets-checkout__input {
-  @include mixins.default-input;
-}
-
-.tickets-checkout__submit-button {
-  @include mixins.default-button;
-  font-weight: bold;
-  padding: variables.$main-size * 2;
-}
