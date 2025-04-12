@@ -1,7 +1,4 @@
-export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
-}
+import { UserRole } from '../../api/users/types';
 
 export interface DecodedToken {
   userId: string;

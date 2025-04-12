@@ -2,7 +2,8 @@ import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { AuthApiService, RegisterUser, User } from '../api/auth';
 import { REFRESH_TOKEN_STORAGE_KEY, TOKEN_STORAGE_KEY } from '../../shared/const';
 import { jwtDecode } from 'jwt-decode';
-import { DecodedToken, UserRole } from './types/decoded-token.model';
+import { DecodedToken } from './types/decoded-token.model';
+import { UserRole } from '../api/users/types';
 
 @Injectable({
   providedIn: 'root',
