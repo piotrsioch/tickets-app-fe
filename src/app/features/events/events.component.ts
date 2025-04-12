@@ -36,20 +36,53 @@ export class EventsComponent implements OnDestroy {
   });
 
   constructor() {
+    this.setupSearchSubscription();
+    this.setupPaginationEffect();
+    this.setupTicketUpdateSubscription();
+  }
+
+  onSearchInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.searchValue.set(target.value);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
+  pageChangeEvent(event: PageEvent) {
+    const { pageIndex: page, pageSize: limit } = event;
+    const { page: _p, limit: _l, ...rest } = this.paginationOptions();
+    this.paginationOptions.set({ page, limit, ...rest });
+  }
+
+  private async loadEvents() {
+    const pagination = this.paginationOptions();
+    const data = await this.eventsApiService.getAllEvents(pagination);
+    const { items: events, total } = data;
+    this.#eventsSignal.set(events);
+    this.totalEvents.set(total);
+  }
+
+  private setupSearchSubscription() {
     const search$ = toObservable(this.searchValue);
     const searchSub = search$.pipe(debounceTime(400)).subscribe(search => {
       const { search: _, ...rest } = this.paginationOptions();
       this.paginationOptions.set({ search, ...rest });
     });
     this.subscriptions.add(searchSub);
+  }
 
+  private setupPaginationEffect() {
     effect(() => {
       const paginationOptions = this.paginationOptions();
       if (paginationOptions) {
         this.loadEvents();
       }
     });
+  }
 
+  private setupTicketUpdateSubscription() {
     const ticketUpdate$ = toObservable(this.updatedTicketAvailability).pipe(
       filter((update): update is { eventId: number; availableTickets: number } => !!update),
       withLatestFrom(toObservable(this.events))
@@ -70,29 +103,5 @@ export class EventsComponent implements OnDestroy {
     });
 
     this.subscriptions.add(ticketSub);
-  }
-
-  private async loadEvents() {
-    const pagination = this.paginationOptions();
-    const data = await this.eventsApiService.getAllEvents(pagination);
-    const { items: events, total } = data;
-    this.#eventsSignal.set(events);
-    this.totalEvents.set(total);
-    console.log(events);
-  }
-
-  onSearchInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.searchValue.set(target.value);
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.unsubscribe();
-  }
-
-  pageChangeEvent(event: PageEvent) {
-    const { pageIndex: page, pageSize: limit } = event;
-    const { page: _p, limit: _l, ...rest } = this.paginationOptions();
-    this.paginationOptions.set({ page, limit, ...rest });
   }
 }
