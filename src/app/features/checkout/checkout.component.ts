@@ -37,7 +37,6 @@ export class CheckoutComponent {
 
   constructor() {
     this.prefillUserData();
-    console.log(window.location.origin);
   }
 
   onBackClicked() {

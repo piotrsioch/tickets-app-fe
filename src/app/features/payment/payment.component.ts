@@ -4,6 +4,8 @@ import { Stripe, StripeElements } from '@stripe/stripe-js';
 import { StripeService } from './stripe.service';
 import { LoadingService } from '../../core/services/loading.service';
 import { CartService } from '../cart/cart.service';
+import { ToastSeverity } from '../../core/services/types/toast.model';
+import { ToastService } from '../../core/services/toast.service';
 
 @Component({
   selector: 'tickets-payment',
@@ -16,6 +18,7 @@ export class PaymentComponent implements OnInit {
   stripeService = inject(StripeService);
   loadingService = inject(LoadingService);
   cartService = inject(CartService);
+  toastService = inject(ToastService);
 
   clientSecret: string | null = null;
   orderId: string | null = null;
@@ -65,12 +68,13 @@ export class PaymentComponent implements OnInit {
       confirmParams: {
         return_url: window.location.origin + '/payment/success',
       },
+      redirect: 'if_required',
     });
-    console.log('payment successful');
-    this.cartService.clearCart();
-
     if (error) {
-      console.error('Payment error', error.message);
+      this.toastService.show('Error during payment', ToastSeverity.ERROR);
+    } else {
+      this.cartService.clearCart();
+      this.router.navigateByUrl('payment/success');
     }
   }
 }
