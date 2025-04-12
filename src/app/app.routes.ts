@@ -14,6 +14,7 @@ import { CartNotEmptyGuard } from './shared/guards/cart-not-empty.guard';
 import { CheckoutComponent } from './features/checkout/checkout.component';
 import { PaymentComponent } from './features/payment/payment.component';
 import { PaymentIntentGuard } from './shared/guards/payment-intent.guard';
+import { PaymentSuccessComponent } from './features/payment/payment-success/payment-success.component';
 
 export const routes: Routes = [
   {
@@ -62,6 +63,10 @@ export const routes: Routes = [
     path: 'payment',
     component: PaymentComponent,
     canActivate: [PaymentIntentGuard],
+  },
+  {
+    path: 'payment/payment-success',
+    component: PaymentSuccessComponent,
   },
   {
     path: 'unauthorized',
