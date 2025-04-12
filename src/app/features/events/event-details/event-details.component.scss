@@ -1,0 +1,66 @@
+@use 'variables';
+
+.event-details {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 3 * variables.$main-size;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 6 * variables.$main-size;
+    gap: 4 * variables.$main-size;
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    border-radius: 3 * variables.$main-size;
+    object-fit: cover;
+    max-height: 400px;
+  }
+
+  &__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3 * variables.$main-size;
+  }
+
+  &__title {
+    font-size: 7 * variables.$main-size;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin: 0;
+  }
+
+  &__date,
+  &__venue,
+  &__category,
+  &__description,
+  &__info p {
+    font-size: 4 * variables.$main-size;
+    color: #444;
+    margin: 0;
+  }
+
+  &__description {
+    margin-top: 2 * variables.$main-size;
+    line-height: 1.6;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2 * variables.$main-size;
+    margin-top: 3 * variables.$main-size;
+  }
+
+  &__label {
+    font-weight: 600;
+    color: #333;
+    margin-right: 1 * variables.$main-size;
+  }
+}

@@ -1,0 +1,84 @@
+@use 'variables';
+@use 'mixins';
+
+.tickets-event-card {
+  &__container {
+    width: variables.$main-size * 150;
+    height: variables.$main-size * 70;
+    background-color: #ffffff;
+    border-radius: 3 * variables.$main-size;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 6 * variables.$main-size;
+    margin: 4 * variables.$main-size 0;
+    transition: box-shadow 0.3s ease;
+  }
+
+  &:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+
+  &__header {
+    margin-bottom: 4 * variables.$main-size;
+  }
+
+  &__title {
+    font-size: 6.4 * variables.$main-size;
+    font-weight: 600;
+    margin: 0;
+    color: #2c2c2c;
+  }
+
+  &__date {
+    font-size: 3.8 * variables.$main-size;
+    color: #777;
+  }
+
+  &__details {
+    margin-bottom: 4.8 * variables.$main-size;
+
+    p {
+      margin: 1.6 * variables.$main-size 0;
+    }
+  }
+
+  &__venue,
+  &__category-name,
+  &__category-description {
+    font-size: 4 * variables.$main-size;
+    color: #444;
+  }
+
+  &__category-description {
+    font-size: 3.6 * variables.$main-size;
+    color: #666;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 4 * variables.$main-size;
+    font-size: 3.8 * variables.$main-size;
+    color: #444;
+    flex-wrap: wrap;
+    gap: 2 * variables.$main-size;
+  }
+
+  &__tickets,
+  &__price {
+    margin: 0;
+  }
+
+  &__label {
+    font-weight: 600;
+    color: #333;
+    margin-right: 1 * variables.$main-size;
+  }
+
+  &__button {
+    @include mixins.default-button();
+    margin-left: auto;
+    margin-top: 2 * variables.$main-size;
+  }
+}

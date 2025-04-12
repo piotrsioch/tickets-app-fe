@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ToastSeverity } from '../../../../core/services/types/toast.model';
-import { CreateEvent, Event, EventsApiService } from '../../../../core/api/events';
-import { ToastService } from '../../../../core/services/toast.service';
+import { ToastSeverity } from '../../../core/services/types/toast.model';
+import { CreateEvent, EventModel, EventsApiService } from '../../../core/api/events';
+import { ToastService } from '../../../core/services/toast.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ModalButtonsComponent } from '../../../../shared/components/modal/modal-buttons/modal-buttons.component';
-import { ModalHeaderComponent } from '../../../../shared/components/modal/modal-header/modal-header.component';
+import { ModalButtonsComponent } from '../../../shared/components/modal/modal-buttons/modal-buttons.component';
+import { ModalHeaderComponent } from '../../../shared/components/modal/modal-header/modal-header.component';
 import { EventModalData } from './admin-events-modal.model';
-import { DateTimePickerComponent } from '../../../../shared/components/date-picker/date-time-picker.component';
+import { DateTimePickerComponent } from '../../../shared/components/date-picker/date-time-picker.component';
 
 @Component({
   selector: 'tickets-admin-events-modal',
@@ -75,9 +75,8 @@ export class AdminEventsModalComponent implements OnInit {
       duration,
       mainCategoryId,
       subcategoriesIds,
-    } = this.form.value as Partial<Event>;
+    } = this.form.value as Partial<EventModel>;
 
-    console.log(this.form.value);
     if (
       !name ||
       !venue ||
@@ -154,7 +153,7 @@ export class AdminEventsModalComponent implements OnInit {
     }
   }
 
-  private async updateEvent(id: number, event: Partial<Event>) {
+  private async updateEvent(id: number, event: Partial<EventModel>) {
     try {
       const updatedEvent = await this.eventsApiService.updateEvent(id, event);
       this.toastService.show('Event updated', ToastSeverity.SUCCESS);

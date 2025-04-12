@@ -2,7 +2,7 @@ import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { AuthApiService, RegisterUser, User } from '../api/auth';
 import { REFRESH_TOKEN_STORAGE_KEY, TOKEN_STORAGE_KEY } from '../../shared/const';
 import { jwtDecode } from 'jwt-decode';
-import { DecodedToken } from './types/decoded-token.model';
+import { DecodedToken, UserRole } from './types/decoded-token.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +10,8 @@ import { DecodedToken } from './types/decoded-token.model';
 export class AuthService {
   private userRefreshToken = signal<string | null>(null);
   #userTokenSignal = signal<string | null>(null);
+  #userRoleSignal = signal<UserRole | null>(null);
+  userRole = this.#userRoleSignal.asReadonly();
   userToken = this.#userTokenSignal.asReadonly();
   isLoggedIn = computed(() => !!this.userToken());
 
@@ -30,6 +32,7 @@ export class AuthService {
         const decoded = this.decodeToken(token);
 
         if (decoded) {
+          this.#userRoleSignal.set(decoded.role);
           this.scheduleTokenRefresh(decoded.exp);
         }
       }
@@ -48,6 +51,8 @@ export class AuthService {
       const token = JSON.parse(jsonRefreshToken);
       this.userRefreshToken.set(token);
     }
+
+    this.#userRoleSignal.set(null);
   }
 
   async login(email: string, password: string): Promise<User> {

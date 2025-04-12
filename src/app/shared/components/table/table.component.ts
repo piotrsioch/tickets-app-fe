@@ -1,4 +1,4 @@
-import { Component, computed, input, model, output, ViewChild } from '@angular/core';
+import { Component, computed, input, model, OnDestroy, output, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { CustomDatasource, PageChangeEvent, TableColumn } from './table.assets';
@@ -6,6 +6,8 @@ import { MatFormField, MatInputModule } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { debounceTime, Subscription } from 'rxjs';
 
 @Component({
   selector: 'tickets-table',
@@ -14,7 +16,9 @@ import { DatePipe } from '@angular/common';
   styleUrl: './table.component.scss',
   standalone: true,
 })
-export class TableComponent<T> {
+export class TableComponent<T> implements OnDestroy {
+  private searchSubscription: Subscription | undefined;
+
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   canAddItem = input<boolean>(false);
   isSearchable = input<boolean>(false);
@@ -38,8 +42,15 @@ export class TableComponent<T> {
     return this.showActions() ? [...columns, 'Actions'] : columns;
   });
   searchValue = model<string>('');
+  search$ = toObservable(this.searchValue);
 
   tableDataSource = computed(() => new MatTableDataSource<T>(this.tableData()?.data));
+
+  constructor() {
+    this.searchSubscription = this.search$.pipe(debounceTime(400)).subscribe(value => {
+      this.searchChanged.emit(value);
+    });
+  }
 
   pageChangeEvent(event: PageChangeEvent): void {
     this.pageChanged.emit({
@@ -72,5 +83,11 @@ export class TableComponent<T> {
 
   onAddClicked() {
     this.addClicked.emit();
+  }
+
+  ngOnDestroy() {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
   }
 }
