@@ -16,7 +16,7 @@ export class AddToCardModalComponent {
     this.dialogRef.close();
   }
 
-  onSave(wasContinueShoppingClicked: boolean) {
-    this.dialogRef.close(wasContinueShoppingClicked);
+  onSave(wasGoToCartClicked: boolean) {
+    this.dialogRef.close(wasGoToCartClicked);
   }
 }

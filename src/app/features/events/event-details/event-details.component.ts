@@ -1,11 +1,11 @@
-import { Component, inject, signal, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventModel } from '../../../core/api/events';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { TicketsSocketService } from '../../../core/services/tickets-socket.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { filter, Subscription } from 'rxjs';
-import { ModalService } from '../../../shared/services/modal.service';
+import { ModalService, ModalStyle } from '../../../shared/services/modal.service';
 import { AddToCardModalComponent } from '../add-to-card-modal/add-to-card-modal.component';
 import { CartService } from '../../cart/cart.service';
 
@@ -45,9 +45,11 @@ export class EventDetailsComponent implements OnDestroy {
 
     this.cartService.addToCart({ eventId, eventName, availableTickets, pricePerTicket }, 1);
 
-    const wasContinueShoppingClicked: boolean | undefined = await this.modal.open(AddToCardModalComponent);
+    const wasGoToCartClicked: boolean | undefined = await this.modal.open(AddToCardModalComponent, {
+      style: ModalStyle.ConfirmModal,
+    });
 
-    if (!wasContinueShoppingClicked) {
+    if (wasGoToCartClicked) {
       await this.router.navigate(['cart']);
     }
   }

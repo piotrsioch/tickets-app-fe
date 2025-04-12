@@ -1,0 +1,14 @@
+.tickets-add-to-card-modal {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__buttons {
+    display: flex;
+    flex: 1;
+    justify-items: flex-end;
+    align-items: flex-end;
+  }
+}
