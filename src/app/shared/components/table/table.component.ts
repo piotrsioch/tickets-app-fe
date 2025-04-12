@@ -48,7 +48,6 @@ export class TableComponent<T> implements OnDestroy {
 
   constructor() {
     this.searchSubscription = this.search$.pipe(debounceTime(400)).subscribe(value => {
-      console.log(1);
       this.searchChanged.emit(value);
     });
   }

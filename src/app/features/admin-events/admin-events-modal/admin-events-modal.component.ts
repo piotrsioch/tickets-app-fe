@@ -77,7 +77,6 @@ export class AdminEventsModalComponent implements OnInit {
       subcategoriesIds,
     } = this.form.value as Partial<EventModel>;
 
-    console.log(this.form.value);
     if (
       !name ||
       !venue ||
