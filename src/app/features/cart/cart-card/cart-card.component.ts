@@ -21,15 +21,19 @@ export class CartCardComponent {
   constructor() {
     effect(() => {
       const currentItem = this.item();
-      if (currentItem) {
-        this.setSelectableQuantities(currentItem);
+
+      if (!currentItem || currentItem.availableTickets === 0) {
+        this.setSelectableQuantities(0);
+        this.totalPrice.set(0);
+      } else {
+        this.setSelectableQuantities(currentItem.availableTickets);
         this.totalPrice.set(currentItem.pricePerTicket * currentItem.quantity);
       }
     });
   }
 
-  setSelectableQuantities(currentItem: CartItem): void {
-    const maxQuantity = Math.min(currentItem.availableTickets, 20);
+  setSelectableQuantities(availableTickets: number): void {
+    const maxQuantity = Math.min(availableTickets, 20);
     const selectNumber = Array.from({ length: maxQuantity }, (_, i) => i + 1);
     this.selectableQuantities.set(selectNumber);
   }
@@ -37,10 +41,12 @@ export class CartCardComponent {
   onQuantityChange(event: Event) {
     const target = event.target as HTMLSelectElement;
     const newQuantity = parseInt(target.value, 10);
-    const eventId = this.item()!.eventId;
+
+    const item = this.item()!;
+    const eventId = item.eventId;
 
     this.quantityChange.emit({ eventId, quantity: newQuantity });
-    this.totalPrice.set(this.item()!.pricePerTicket * newQuantity);
+    this.totalPrice.set(item.pricePerTicket * newQuantity);
   }
 
   onRemoveClicked() {
