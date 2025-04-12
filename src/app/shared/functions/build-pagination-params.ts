@@ -19,5 +19,9 @@ export function buildPaginationParams(options: PaginationOptions): HttpParams {
     params = params.set('searchFields', searchFields);
   }
 
+  if (options.where) {
+    params = params.set('where', JSON.stringify(options.where));
+  }
+
   return params;
 }

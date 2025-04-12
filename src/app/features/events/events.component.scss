@@ -22,6 +22,12 @@
     align-items: center;
   }
 
+  &__filters {
+    display: flex;
+    gap: variables.$main-size * 10;
+    margin-bottom: variables.$main-size * 8;
+  }
+
   &__cards {
     display: flex;
     flex-direction: column;
