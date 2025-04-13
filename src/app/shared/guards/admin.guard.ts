@@ -14,6 +14,7 @@ export const AdminGuard: CanActivateFn = () => {
     return false;
   }
 
+
   const decoded: DecodedToken = jwtDecode(token);
   if (decoded?.['role'] === 'admin') {
     return true;

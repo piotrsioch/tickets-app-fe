@@ -21,8 +21,16 @@
     </div>
 
     <div class="tickets-admin-events-modal__form-field">
-      <label for="venue" class="tickets-admin-events-modal__label">Main Category Id</label>
-      <input formControlName="mainCategoryId" id="mainCategoryId" class="tickets-admin-events-modal__input" type="text" />
+      <label for="mainCategoryId" class="tickets-admin-events-modal__label">Main Category</label>
+      <select
+        id="mainCategoryId"
+        formControlName="mainCategoryId"
+        class="tickets-admin-events-modal__input"
+      >
+        @for (category of mainCategories(); track category.id) {
+          <option [value]="category.id">{{ category.name }}</option>
+        }
+      </select>
     </div>
 
     <div class="tickets-admin-events-modal__form-field">
