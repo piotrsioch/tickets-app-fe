@@ -1,0 +1,11 @@
+<div class="tickets-history__container">
+  @if(orders() && (orders().length > 0)) {
+    <div class="tickets-history__cards">
+      @for(order of orders(); track order.id) {
+        <tickets-order-card [order]="order"></tickets-order-card>
+      }
+    </div>
+  } @else {
+    <p>You don't have any orders yet.</p>
+  }
+</div>

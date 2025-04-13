@@ -1,0 +1,59 @@
+@use 'variables';
+@use 'mixins';
+
+.tickets-order-card {
+  &__container {
+    border: 1px solid #ddd;
+    border-radius: variables.$main-size;
+    padding: variables.$main-size * 4;
+    margin-bottom: variables.$main-size * 4;
+  }
+
+  &__header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: variables.$main-size * 2;
+  }
+
+  &__header {
+    font-weight: bold;
+  }
+
+  &__id,
+  &__status,
+  &__date,
+  &__amount {
+    font-size: variables.$main-size * 4;
+    margin-bottom: variables.$main-size;
+  }
+
+  &__tickets {
+    margin-top: variables.$main-size * 2;
+  }
+
+  &__tickets-title {
+    font-size: variables.$main-size * 4;
+    margin-bottom: variables.$main-size * 2;
+  }
+
+  &__tickets-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  &__ticket {
+    padding: variables.$main-size * 2;
+    border: 1px solid #ccc;
+    border-radius: variables.$main-size;
+    margin-bottom: variables.$main-size * 2;
+    font-size: variables.$main-size * 3;
+  }
+
+  &__pay-button {
+    @include mixins.default-button();
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: variables.$main-size * 7 auto;
+  }
+}

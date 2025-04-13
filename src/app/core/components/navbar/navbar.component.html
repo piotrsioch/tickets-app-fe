@@ -1,10 +1,4 @@
 <div class="tickets-navbar__container">
-  <a
-    routerLink="/events"
-    class="tickets-navbar__item"
-  >
-    Events
-  </a>
   @if(userRole() === UserRole.ADMIN) {
     <a
       routerLink="/categories"
@@ -16,21 +10,29 @@
       routerLink="/admin-events"
       class="tickets-navbar__item"
     >
-      Admin Events
+      Events
     </a>
-  } @else if(userRole() === UserRole.USER) {
+  } @else {
+    <a
+      routerLink="/events"
+      class="tickets-navbar__item"
+    >
+      Events
+    </a>
+    <a
+      routerLink="/cart"
+      class="tickets-navbar__item"
+    >
+      <mat-icon>shopping_basket</mat-icon>
+    </a>
+  } @if(userRole() === UserRole.USER) {
     <a
       routerLink="/history"
       class="tickets-navbar__item">
       History
     </a>
   }
-  <a
-    routerLink="/cart"
-    class="tickets-navbar__item"
-  >
-    <mat-icon>shopping_basket</mat-icon>
-  </a>
+
   @if(!isLoggedIn()) {
     <a
       routerLink="/login"

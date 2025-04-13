@@ -28,6 +28,15 @@
     margin-bottom: variables.$main-size * 8;
   }
 
+  &__search {
+    width: variables.$main-size * 70;
+
+    mat-form-field {
+      display: flex;
+      flex: 1;
+    }
+  }
+
   &__cards {
     display: flex;
     flex-direction: column;

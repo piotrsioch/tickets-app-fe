@@ -1,4 +1,4 @@
-import { BaseUuidModel } from '../../../../shared/models';
+import { BaseModel, BaseUuidModel } from '../../../../shared/models';
 import { OrderStatus } from './order-status.enum';
 
 export interface Order extends BaseUuidModel {
@@ -17,4 +17,10 @@ export interface TicketDto extends BaseUuidModel {
   purchaseDate: Date;
   isUsed: boolean;
   seatNumber?: string;
+}
+
+export interface OrderTicket extends BaseModel {
+  orderId: string;
+  eventId: number;
+  quantity: number;
 }

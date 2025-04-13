@@ -13,7 +13,7 @@ export class ToastService {
       if (this.#toastSignal()) {
         setTimeout(() => {
           this.#toastSignal.set(null);
-        }, 1000000);
+        }, 1000);
       }
     });
   }
