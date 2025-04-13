@@ -94,12 +94,10 @@ export class OrderCardComponent {
       ticketQuantities = this.getTicketQuantitiesForPaidOrder(order);
     } else {
       ticketQuantities = await this.getTicketQuantitiesForUnpaidOrder(order);
-      console.log(ticketQuantities);
     }
 
     const availabilityChecks = await this.checkAvailability(ticketQuantities);
     const allAvailable = availabilityChecks.every(Boolean);
-    console.log(allAvailable);
     this.payAvailable.set(allAvailable);
 
     if (hasGeneratedTickets) {

@@ -54,7 +54,6 @@ export class AdminEventsModalComponent implements OnInit {
     this.getMainCategories().then(() => {
       if (this.data?.event) {
         const mainCategoryId = this.data.event.mainCategory?.id ?? null;
-        console.log(this.data.event.mainCategory);
         this.form.patchValue({
           name: this.data.event.name,
           eventDate: new Date(this.data.event.eventDate),
@@ -144,7 +143,6 @@ export class AdminEventsModalComponent implements OnInit {
     const id = parseInt(categoryId, 10);
     if (!isNaN(id)) {
       this.form.patchValue({ mainCategoryId: id });
-      console.log(this.form.value.mainCategoryId);
     }
   }
 
