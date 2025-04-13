@@ -15,6 +15,7 @@ import { CheckoutComponent } from './features/checkout/checkout.component';
 import { PaymentComponent } from './features/payment/payment.component';
 import { PaymentIntentGuard } from './shared/guards/payment-intent.guard';
 import { PaymentSuccessComponent } from './features/payment/payment-success/payment-success.component';
+import { HistoryComponent } from './features/history/history.component';
 
 export const routes: Routes = [
   {
@@ -38,6 +39,11 @@ export const routes: Routes = [
     path: 'admin-events',
     component: AdminEventsComponent,
     canActivate: [LoggedInGuard, AdminGuard],
+  },
+  {
+    path: 'history',
+    component: HistoryComponent,
+    canActivate: [LoggedInGuard],
   },
   {
     path: 'events',

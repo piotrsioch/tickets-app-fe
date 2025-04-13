@@ -5,7 +5,7 @@
 .tickets-admin-events-modal {
   &__container {
     height: 100%;
-    padding: 16px;
+    padding: variables.$main-size * 4;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -19,8 +19,8 @@
     flex-direction: column;
     justify-content: space-between;
     flex-grow: 1;
-    margin-top: 30px;
-    gap: 16px;
+    margin-top: variables.$main-size * 7.5;
+    gap: variables.$main-size * 4;
   }
 
   &__form-field {
@@ -29,9 +29,9 @@
   }
 
   &__label {
-    font-size: 14px;
+    font-size: variables.$main-size * 3.5;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: variables.$main-size * 2;
   }
 
   &__input,
@@ -41,5 +41,11 @@
 
   &__textarea {
     resize: vertical;
+  }
+
+  &__error {
+    margin-top: - variables.$main-size * 4;
+    color: red;
+    font-size: variables.$main-size * 3.5;
   }
 }

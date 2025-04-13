@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { withAuthHeaders } from '../../../shared/functions';
 import { environment } from '../../../../environments';
 import { firstValueFrom } from 'rxjs';
-import { CreateOrder, CreateOrderResponse, Order } from './types';
+import { CreateOrder, CreateOrderResponse, Order, OrderTicket } from './types';
 import { SkipLoading } from '../../interceptors/loading.interceptor';
 
 @Injectable({
@@ -27,5 +27,17 @@ export class OrdersApiService {
     const $order = this.http.post<CreateOrderResponse>(`${environment.apiRoot}/orders`, data, { context });
 
     return await firstValueFrom($order);
+  }
+
+  async getUserOrders(): Promise<Order[]> {
+    const headers = withAuthHeaders(this.authService);
+    const $orders = this.http.get<Order[]>(`${environment.apiRoot}/orders/user-orders`, { ...headers });
+
+    return firstValueFrom($orders);
+  }
+
+  async getOrderTicketsById(id: string): Promise<OrderTicket[]> {
+    const $orderTickets = this.http.get<OrderTicket[]>(`${environment.apiRoot}/orders/order-tickets/${id}`);
+    return firstValueFrom($orderTickets);
   }
 }

@@ -72,10 +72,11 @@ export class AuthService {
   async logout() {
     const token = this.userToken();
     const refreshToken = this.userRefreshToken();
+    this.#userRoleSignal.set(null);
+    this.#userTokenSignal.set(null);
 
     if (token) {
       await this.authApiService.logout(token);
-      this.#userTokenSignal.set(null);
       localStorage.removeItem(TOKEN_STORAGE_KEY);
     }
 
