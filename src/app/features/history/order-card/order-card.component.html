@@ -38,6 +38,7 @@
   } @else if(payAvailable()){
     <button
       [disabled]="!payAvailable()"
+      (click)="onPayClicked()"
       class="tickets-order-card__pay-button"
     >
       Pay for your order

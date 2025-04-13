@@ -1,5 +1,5 @@
 @if(event()) {
-  <div (click)="navigateToDetails()" class="tickets-event-card__container">
+  <div class="tickets-event-card__container">
     <div class="tickets-event-card__header">
       <h2 class="tickets-event-card__title">{{ event().name }}</h2>
       <p class="tickets-event-card__date">{{ event().eventDate | date: "dd MMM, yyyy 'at' HH:mm" }}</p>
