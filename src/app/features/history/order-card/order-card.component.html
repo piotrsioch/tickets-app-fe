@@ -1,0 +1,50 @@
+<div class="tickets-order-card__container">
+  <div class="tickets-order-card__header-wrapper">
+    <div class="tickets-order-card__id">
+      <span class="tickets-order-card__header">Order ID:</span>
+      {{ order().id }}
+    </div>
+    <div class="tickets-order-card__status">
+      <span class="tickets-order-card__header">Status: </span>
+      {{ order().status }}
+    </div>
+  </div>
+
+  <div class="tickets-order-card__details">
+    <div class="tickets-order-card__date">
+      <span class="tickets-order-card__header">Purchase Date: </span>
+      {{ order().purchaseDate | date: 'medium' }}
+    </div>
+    <div class="tickets-order-card__amount">
+      <span class="tickets-order-card__header">Total Amount: </span>
+      {{ order().totalAmount | currency }}
+    </div>
+  </div>
+
+  @if(tickets() && (tickets()?.length || 0) > 0) {
+    <div class="tickets-order-card__tickets">
+      <h4 class="tickets-order-card__tickets-title">Tickets:</h4>
+      <ul class="tickets-order-card__tickets-list">
+        @for(ticket of tickets(); track ticket?.id ) {
+          <li class="tickets-order-card__ticket">
+            <span class="tickets-order-card__header">Event: </span>
+            {{ ticket.eventName }} -
+            <span class="tickets-order-card__header">ID: </span>
+            {{ ticket.id }}
+          </li>
+        }
+      </ul>
+    </div>
+  } @else if(payAvailable()){
+    <button
+      [disabled]="!payAvailable()"
+      class="tickets-order-card__pay-button"
+    >
+      Pay for your order
+    </button>
+  } @else {
+    @if(!payAvailable()) {
+      <p>There are no more tickets for events of this order</p>
+    }
+  }
+</div>

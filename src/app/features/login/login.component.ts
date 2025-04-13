@@ -31,7 +31,7 @@ export class LoginComponent {
       }
 
       await this.authService.login(email, password);
-      await this.router.navigate(['/home']);
+      await this.router.navigate(['/events']);
     } catch (error) {
       console.error(error);
       this.toastService.show('Error during login', ToastSeverity.ERROR);
