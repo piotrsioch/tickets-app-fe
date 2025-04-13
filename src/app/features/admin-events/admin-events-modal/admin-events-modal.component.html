@@ -14,6 +14,9 @@
       fieldName="Event Date"
       formControlName="eventDate"
     ></tickets-date-time-picker>
+    @if(form && form.errors && form.errors['eventDate']) {
+      <div class="tickets-admin-events-modal__error"> {{ form.errors["eventDate"]}}</div>
+    }
 
     <div class="tickets-admin-events-modal__form-field">
       <label for="venue" class="tickets-admin-events-modal__label">Venue</label>
@@ -47,11 +50,17 @@
       fieldName="Sales Start Date"
       formControlName="salesStartDate"
     ></tickets-date-time-picker>
+    @if(form && form.errors && form.errors['salesStartDate']) {
+      <div class="tickets-admin-events-modal__error"> {{ form.errors["salesStartDate"]}}</div>
+    }
 
     <tickets-date-time-picker
       fieldName="Sales End Date"
       formControlName="salesEndDate"
     ></tickets-date-time-picker>
+    @if(form && form.errors && form.errors['salesEndDate']) {
+      <div class="tickets-admin-events-modal__error"> {{ form.errors["salesEndDate"]}}</div>
+    }
 
     <div class="tickets-admin-events-modal__form-field">
       <label for="duration" class="tickets-admin-events-modal__label">Event Duration (minutes)</label>
