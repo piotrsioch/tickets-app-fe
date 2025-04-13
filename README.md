@@ -1,59 +1,70 @@
-# TicketsAppFe
+# 🎟️ Tickets App FE
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
+## 🎯 Cel projektu
 
-## Development server
+Aplikacja webowa (SPA) umożliwiająca przegląd wydarzeń oraz zakup biletów dla użytkowników zalogowanych i niezalogowanych. Projekt skupia się na nowoczesnych rozwiązaniach frontendowych z wykorzystaniem Angulara, zapewniając płynne i bezpieczne doświadczenie zakupowe.
 
-To start a local development server, run:
+## 🧱 Architektura i główne decyzje projektowe
 
-```bash
-ng serve
-```
+Projekt został utworzony w repozytorium na uczelnianym GitLabie i posiada kompletną historię zmian. Aplikacja została zrealizowana w Angularze z podejściem *standalone components* oraz *signals*, co pozwala na pisanie nowoczesnego, efektywnego i reaktywnego kodu. Struktura aplikacji została podzielona na trzy główne warstwy:
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 📁 Struktura projektu
 
-## Code scaffolding
+- **`core/`** – zawiera:
+  - serwisy do komunikacji z backendem oraz inne kluczowe serwisy (np AuthService/LoadingService),
+  - komponenty bazowe jak `navbar`, `root-layout`, `toast`, `loading`,
+  - `TicketsSocketService`, który umożliwia aktualizację dostępności biletów w czasie rzeczywistym dzięki WebSocketom.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **`shared/`** – zawiera wspólne komponenty, klasy, typy, serwisy, funkcje, które są wykorzystywane w wielu miejscach aplikacji.
 
-```bash
-ng generate component component-name
-```
+- **`features/`** – zawiera funkcjonalności aplikacji podzielone na moduły/komponenty:
+  - `login`, `register`, `events`, `event-details`, `cart`, `payment`, `checkout`, `history`, itd.
+  - Każdy z modułów jest pisany w podejściu *standalone*, co pozwala na łatwe skalowanie kodu.
+  - Stan aplikacji w praktycznie każdym miejscu zarządzany jest przy pomocy Angular Signals.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 🔐 Autoryzacja i bezpieczeństwo
 
-```bash
-ng generate --help
-```
+- Uwierzytelnianie oparte jest o tokeny JWT z krótkim czasem życia. Tokeny są automatycznie odświeżane co 15 minut.
+- Dostęp do panelu administratora (przegląd, edycja i usuwanie wydarzeń oraz kategorii) chroniony jest:
+  - po stronie frontendowej guardem opartym na roli w tokenie,
+  - po stronie backendu – weryfikacją podpisu JWT przy użyciu klucza prywatnego.
+- Próba ręcznej modyfikacji tokena przez użytkownika nie daje efektu – backend odrzuca nieautoryzowane żądania.
 
-## Building
+### 📅 Moduł wydarzeń (`events`)
 
-To build the project run:
+Moduł wydarzeń stanowi centralny element aplikacji i zawiera rozbudowaną funkcjonalność:
 
-```bash
-ng build
-```
+- **Lista wydarzeń**:
+  - pobierana z backendu z paginacją i dynamicznym filtrowaniem (wszystko realizowane po stronie backendu),
+  - możliwe jest wyszukiwanie po nazwie oraz filtrowanie po kategorii,
+  - checkbox umożliwia wyświetlenie wyłącznie wydarzeń z dostępnymi biletami.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- **Szczegóły wydarzenia**:
+  - prezentowane po kliknięciu w kartę wydarzenia,
+  - zawierają dokładne informacje o wydarzeniu, liczbę dostępnych miejsc oraz cenę biletu,
+  - umożliwiają wybór ilości biletów oraz dodanie ich do koszyka.
 
-## Running unit tests
+- **Koszyk**:
+  - po dodaniu biletu pojawia się modal z opcją kontynuowania zakupów lub przejścia do koszyka,
+  - dane o koszyku przechowywane są zarówno w serwisie `CartService`, jak i w `localStorage`, dzięki czemu przetrwają odświeżenie strony i ponowne uruchomienie aplikacji.
+### 💳 Zakup biletów
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- Zakup biletów realizowany jest przez integrację z **Stripe**.
+- Przed przekierowaniem do płatności system automatycznie sprawdza dostępność biletów:
+  - jeśli bilety są niedostępne, użytkownik nie może kontynuować zakupu i otrzymuje komunikat (toast).
+- Statusy zamówień są automatycznie aktualizowane po transakcji.
 
-```bash
-ng test
-```
+### 📦 Inne funkcjonalności
 
-## Running end-to-end tests
+- Komponent koszyka (`cart`) pozwala na dynamiczne dodawanie i usuwanie biletów, z synchronizacją ilości dostępnych miejsc.
+- Użytkownik po udanej płatności widzi ekran potwierdzający transakcję z opcją przejścia do historii zamówień.
+- Komponenty oraz style aplikacji są zgodne z konwencją **BEM**, co ułatwia skalowanie i utrzymanie projektu.
 
-For end-to-end (e2e) testing, run:
+## 🛠 Technologie
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Angular 19 (standalone components, signals)
+- TypeScript
+- RxJS / Angular Signals
+- SCSS (BEM naming + zmienne + mixiny)
+- Stripe Payments
+- WebSocket (dla aktualizacji danych o biletach)
